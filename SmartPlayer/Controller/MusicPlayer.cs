@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Storage;
 using SmartPlayer.Model;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SmartPlayer.Controller
 {
@@ -24,29 +25,27 @@ namespace SmartPlayer.Controller
 				var artist = properties.Artist;
 				var title = properties.Title;
 				var album = properties.Album;
-				var img = await file.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.MusicView+);
+				var img = await file.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.ListView);
 
 				var isArtist = string.IsNullOrWhiteSpace(artist);
 				var isTitle = string.IsNullOrWhiteSpace(title);
 				var isAlbum = string.IsNullOrWhiteSpace(album);
 
 				newSong.File = file;
-				newSong.AlbumImage = img.
+
+				BitmapImage lol = new BitmapImage();
+				lol.SetSource(img);
+				newSong.AlbumImage = lol;
 
 				if (!isAlbum)
 					newSong.Album = album;
 
 				if (!isArtist)
 					newSong.Artist = artist;
-				else
-				{
-					newSong.Artist = file.DisplayName;
-					songs.Add(newSong);
-				}
-
+						
 				if (!isTitle)
 					newSong.Title = title;
-				else
+				else 
 					newSong.Title = file.DisplayName;
 
 				songs.Add(newSong);

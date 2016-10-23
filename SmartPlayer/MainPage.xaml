@@ -6,19 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:SmartPlayer.Model"
-    mc:Ignorable="d" Width="656">
+    mc:Ignorable="d" Width="Auto" Height="Auto">
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center" Height="Auto" Width="Auto">
 
-		<Button x:Name="button" Content="Open
-				" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="82" Width="257" Click="button_Click"/>
-		<MediaElement x:Name="mediaPlayer" HorizontalAlignment="Left" Height="66" Margin="10,375,0,0" VerticalAlignment="Top" Width="76" RenderTransformOrigin="0.5,0.5" MediaOpened="mediaPlayer_MediaOpened" MediaEnded="mediaPlayer_MediaEnded"/>
-		<Slider x:Name="timelineSlider" HorizontalAlignment="Left" Margin="0,230,0,0" VerticalAlignment="Top" Width="257" IsThumbToolTipEnabled="False" PointerCaptureLost="SeekToMediaPosition"/>
-		<TextBlock x:Name="time" HorizontalAlignment="Left" Margin="0,192,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" RenderTransformOrigin="0.613,-1.1" Height="40" Width="257" FontSize="22"/>
-		<Slider x:Name="volumeSlider" ValueChanged="ChangeMediaVolume" StepFrequency="0.01" Minimum="0.0" Maximum="1.0" Value="1.0" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="247" IsThumbToolTipEnabled="False"/>
-		<TextBlock x:Name="songName" Margin="10,115,0,0" TextWrapping="Wrap" Text="Song name" VerticalAlignment="Top" RenderTransformOrigin="-1.014,0.625" Width="257" Height="50" FontSize="24" HorizontalAlignment="Left"/>
+		<Button x:Name="button" Content="Open" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Click="button_Click" Width="210"/>
+		<MediaElement x:Name="mediaPlayer" HorizontalAlignment="Left" Margin="10,570,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" MediaOpened="mediaPlayer_MediaOpened" MediaEnded="mediaPlayer_MediaEnded" AreTransportControlsEnabled="True" AudioCategory="Media" Height="50" Width="210"/>
+		<Slider x:Name="timelineSlider" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top" IsThumbToolTipEnabled="False" PointerCaptureLost="SeekToMediaPosition" Width="220"/>
+		<TextBlock x:Name="time" HorizontalAlignment="Left" Margin="10,147,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" RenderTransformOrigin="0.613,-1.1" FontSize="22" TextReadingOrder="DetectFromContent" TextAlignment="Center" Height="28" Width="210"/>
+		<Slider x:Name="volumeSlider" ValueChanged="ChangeMediaVolume" StepFrequency="0.01" Minimum="0.0" Maximum="1.0" Value="1.0" HorizontalAlignment="Left" Margin="10,244,0,0" VerticalAlignment="Top" Width="220" IsThumbToolTipEnabled="False"/>
+		<TextBlock x:Name="songName" Margin="10,81,0,0" Text="Song name" VerticalAlignment="Top" RenderTransformOrigin="-1.014,0.625" FontSize="24" HorizontalAlignment="Left" Width="210"/>
 
-		<ListView x:Name="listViewSongs" Margin="297,10,10,10" Background="{ThemeResource ButtonDisabledBorderThemeBrush}">
+		<ListView x:Name="listViewSongs" Margin="10,293,10,76" Background="{ThemeResource ButtonDisabledBorderThemeBrush}">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<Grid Height="40" >
@@ -26,9 +25,11 @@
 							<ColumnDefinition Width="Auto"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
+
 						<Border Background="DarkGray" Width="30" Height="30">
 							<Image Source="{Binding AlbumImage}" Stretch="UniformToFill"/>
 						</Border>
+
 						<StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
 							<TextBlock Text="{Binding Title}" FontSize="14"/>
 							<TextBlock Text="{Binding Artist}" FontSize="12"/>
@@ -37,7 +38,5 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-
-
 	</Grid>
 </Page>

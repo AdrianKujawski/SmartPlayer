@@ -123,6 +123,7 @@
     <None Include="SmartPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\a.bmp" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -149,7 +150,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

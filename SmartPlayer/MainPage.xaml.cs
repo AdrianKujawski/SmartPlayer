@@ -33,6 +33,8 @@ namespace SmartPlayer
 			volumeSlider.Value = 100;
 			ListViewCreate();
 			listViewSongs.Tapped += mediaPlayer_ItemClick;
+			songName.Text = "";
+			
 		}
 
 		private void ListViewCreate()
@@ -61,7 +63,7 @@ namespace SmartPlayer
 				listViewSongs.ItemsSource = MusicPlayer.songs;
 			}
 
-			file = null;
+			
 		}
 
 		private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
@@ -130,15 +132,14 @@ namespace SmartPlayer
 
 		private async void mediaPlayer_ItemClick(object sender, RoutedEventArgs e)
 		{
-			try {
-
+			try 
+			{
 			var selectedSong = listViewSongs.SelectedItem as Song;
 			mediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
+			songName.Text = selectedSong.GetFullName();
 			}
 			catch(Exception exc)
 			{
-				MessageDialog saa = new MessageDialog(exc.ToString());
-				saa.ShowAsync();
 			}
 		}
 	}

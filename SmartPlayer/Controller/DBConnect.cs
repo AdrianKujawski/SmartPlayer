@@ -8,7 +8,7 @@ using SmartPlayer.PlayerService;
 namespace SmartPlayer.Controller {
 	class DBConnect {
 
-		public async void Test()
+		public static async void Test()
 		{
 			MPServiceSoapClient soapClient = new MPServiceSoapClient();
 			var response = await soapClient.GetUserAsync();
