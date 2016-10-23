@@ -9,14 +9,14 @@ namespace SmartPlayer.Controller
 {
 	internal class MusicPlayer
 	{
-		public static ObservableCollection<Song> songs { set; get; }
+		public static ObservableCollection<Song> Songs { set; get; }
 
 		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
 		{
 			CreateSong(files);
 		}
 
-		public static async void CreateSong(IEnumerable<StorageFile> files)
+		private static async void CreateSong(IEnumerable<StorageFile> files)
 		{
 			foreach (var file in files)
 			{
@@ -48,8 +48,9 @@ namespace SmartPlayer.Controller
 				else 
 					newSong.Title = file.DisplayName;
 
-				songs.Add(newSong);
+				Songs.Add(newSong);
 			}
 		}
+
 	}
 }

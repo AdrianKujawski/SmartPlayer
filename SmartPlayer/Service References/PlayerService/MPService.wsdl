@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="HelloWorld">
-        <s:complexType />
-      </s:element>
-      <s:element name="HelloWorldResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="GetUser">
         <s:complexType />
       </s:element>
       <s:element name="GetUserResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:ArrayOfSong" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:ArrayOfUser" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfSong">
+      <s:complexType name="ArrayOfUser">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Song" nillable="true" type="tns:Song" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="Song">
+      <s:complexType name="User">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="artistId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="FindSong">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="album" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="artist" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindSongResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindSongResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="HelloWorldSoapIn">
-    <wsdl:part name="parameters" element="tns:HelloWorld" />
-  </wsdl:message>
-  <wsdl:message name="HelloWorldSoapOut">
-    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
-  </wsdl:message>
   <wsdl:message name="GetUserSoapIn">
     <wsdl:part name="parameters" element="tns:GetUser" />
   </wsdl:message>
   <wsdl:message name="GetUserSoapOut">
     <wsdl:part name="parameters" element="tns:GetUserResponse" />
   </wsdl:message>
+  <wsdl:message name="FindSongSoapIn">
+    <wsdl:part name="parameters" element="tns:FindSong" />
+  </wsdl:message>
+  <wsdl:message name="FindSongSoapOut">
+    <wsdl:part name="parameters" element="tns:FindSongResponse" />
+  </wsdl:message>
   <wsdl:portType name="MPServiceSoap">
-    <wsdl:operation name="HelloWorld">
-      <wsdl:input message="tns:HelloWorldSoapIn" />
-      <wsdl:output message="tns:HelloWorldSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetUser">
       <wsdl:input message="tns:GetUserSoapIn" />
       <wsdl:output message="tns:GetUserSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="FindSong">
+      <wsdl:input message="tns:FindSongSoapIn" />
+      <wsdl:output message="tns:FindSongSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MPServiceSoap" type="tns:MPServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/GetUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -68,8 +75,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUser">
-      <soap:operation soapAction="http://tempuri.org/GetUser" style="document" />
+    <wsdl:operation name="FindSong">
+      <soap:operation soapAction="http://tempuri.org/FindSong" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -80,8 +87,8 @@
   </wsdl:binding>
   <wsdl:binding name="MPServiceSoap12" type="tns:MPServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://tempuri.org/GetUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -89,8 +96,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUser">
-      <soap12:operation soapAction="http://tempuri.org/GetUser" style="document" />
+    <wsdl:operation name="FindSong">
+      <soap12:operation soapAction="http://tempuri.org/FindSong" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

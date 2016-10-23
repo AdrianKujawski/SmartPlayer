@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Input;
 using SmartPlayer.Controller;
 using SmartPlayer.Model;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Media;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -30,17 +31,16 @@ namespace SmartPlayer
 		public MainPage()
 		{
 			InitializeComponent();
-			volumeSlider.Value = 100;
+			VolumeSlider.Value = 100;
 			ListViewCreate();
-			listViewSongs.Tapped += mediaPlayer_ItemClick;
-			songName.Text = "";
-			
+			ListViewSongs.Tapped += mediaPlayer_ItemClick;
+			SongName.Text = "";
 		}
 
 		private void ListViewCreate()
 		{
-			MusicPlayer.songs = new ObservableCollection<Song>();
-			listViewSongs.ItemsSource = MusicPlayer.songs;
+			MusicPlayer.Songs = new ObservableCollection<Song>();
+			ListViewSongs.ItemsSource = MusicPlayer.Songs;
 		}
 		private async void button_Click(object sender, RoutedEventArgs e)
 		{
@@ -60,7 +60,7 @@ namespace SmartPlayer
 			if (file != null)
 			{
 				MusicPlayer.AddSongToPlaylist(file);
-				listViewSongs.ItemsSource = MusicPlayer.songs;
+				ListViewSongs.ItemsSource = MusicPlayer.Songs;
 			}
 
 			
@@ -68,13 +68,13 @@ namespace SmartPlayer
 
 		private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
 		{
-			int temp = (int) mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+			int temp = (int) MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
 
-			timelineSlider.Value = 0;
-			timelineSlider.Maximum = temp;
+			TimelineSlider.Value = 0;
+			TimelineSlider.Maximum = temp;
 
-			mediaPlayer.Volume = volumeSlider.Value;
-			mediaPlayer.Play();
+			MediaPlayer.Volume = VolumeSlider.Value;
+			MediaPlayer.Play();
 			StartCountTimeSong();
 		}
 
@@ -95,7 +95,7 @@ namespace SmartPlayer
 
 		private void ChangeSlidePosition(object sender, object e)
 		{
-			timelineSlider.Value += 1;
+			TimelineSlider.Value += 1;
 		}
 
 		private void SetCurrentSongTime(object sender, object e)
@@ -105,42 +105,74 @@ namespace SmartPlayer
 
 		private void SeekToMediaPosition(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
 		{
-			int sliderValue = (int) timelineSlider.Value;
+			int sliderValue = (int) TimelineSlider.Value;
 
 			TimeSpan ts = new TimeSpan(0, 0, 0, sliderValue, 0);
-			mediaPlayer.Position = ts;
+			MediaPlayer.Position = ts;
 			ChangeTimeTextValue();
 		}
 
 		private void ChangeTimeTextValue()
 		{
-			var songTime = mediaPlayer.Position.ToString(@"hh\:mm\:ss");
-			time.Text = songTime;
+			var songTime = MediaPlayer.Position.ToString(@"hh\:mm\:ss");
+			Time.Text = songTime;
 		}
 
 		private void ChangeMediaVolume(object sender, RangeBaseValueChangedEventArgs e)
 		{
-			mediaPlayer.Volume = volumeSlider.Value;
+			MediaPlayer.Volume = VolumeSlider.Value;
 		}
 
 		private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
 		{
-			time.Text = "00:00:00";
-			timelineSlider.Value = 0;
-			mediaPlayer.Play();
+			Time.Text = "00:00:00";
+			TimelineSlider.Value = 0;
+			MediaPlayer.Play();
 		}
 
 		private async void mediaPlayer_ItemClick(object sender, RoutedEventArgs e)
 		{
 			try 
 			{
-			var selectedSong = listViewSongs.SelectedItem as Song;
-			mediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
-			songName.Text = selectedSong.GetFullName();
+				var selectedSong = ListViewSongs.SelectedItem as Song;
+				MediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
+				SongName.Text = selectedSong.GetFullName();
+				bool isSongExist = await Service.IsSongExist(selectedSong.Title, selectedSong.Album, selectedSong.Artist);
+
+				if (isSongExist)
+					NotifyUser("Piosenka znaleziona", NotifyType.StatusMessage);
+				else
+					NotifyUser("Nie znaleziono piosenki", NotifyType.ErrorMessage);
 			}
-			catch(Exception exc)
+			catch (Exception exc)
 			{
 			}
 		}
+
+		public void NotifyUser(string strMessage, NotifyType type) {
+			switch (type) {
+				case NotifyType.StatusMessage:
+					StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+					break;
+				case NotifyType.ErrorMessage:
+					StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Red);
+					break;
+			}
+			StatusText.Text = strMessage;
+
+			StatusBorder.Visibility = (StatusText.Text != String.Empty) ? Visibility.Visible : Visibility.Collapsed;
+			if (StatusText.Text != String.Empty) {
+				StatusBorder.Visibility = Visibility.Visible;
+			}
+			else {
+				StatusBorder.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		public enum NotifyType 
+		{
+			StatusMessage,
+			ErrorMessage
+		};
 	}
 }
