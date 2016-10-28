@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Input;
 using SmartPlayer.Controller;
 using SmartPlayer.Model;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media;
 
 
@@ -27,7 +29,8 @@ namespace SmartPlayer
 		private DispatcherTimer _timerSlider;
 		private DateTimeOffset _startTime;
 		private DateTimeOffset _lastTime;
-
+		private int minFormHeight;
+		private int minFormWidht;
 		public MainPage()
 		{
 			InitializeComponent();
@@ -159,14 +162,6 @@ namespace SmartPlayer
 					break;
 			}
 			StatusText.Text = strMessage;
-
-			StatusBorder.Visibility = (StatusText.Text != String.Empty) ? Visibility.Visible : Visibility.Collapsed;
-			if (StatusText.Text != String.Empty) {
-				StatusBorder.Visibility = Visibility.Visible;
-			}
-			else {
-				StatusBorder.Visibility = Visibility.Collapsed;
-			}
 		}
 
 		public enum NotifyType 
@@ -174,5 +169,25 @@ namespace SmartPlayer
 			StatusMessage,
 			ErrorMessage
 		};
+
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			Debug.WriteLine(MainLayout.ActualHeight);
+
+		}
+
+		private void StatisticButton_Click(object sender, RoutedEventArgs e)
+		{
+			bool isPlayerActiv = PlayerPanel.Visibility == Visibility.Visible;
+
+			if (isPlayerActiv) {
+				PlayerPanel.Visibility = Visibility.Collapsed;
+				StatisticPanel.Visibility = Visibility.Visible;
+			}
+			else {
+				PlayerPanel.Visibility = Visibility.Visible;
+				StatisticPanel.Visibility = Visibility.Collapsed;
+			}
+		}
 	}
 }
