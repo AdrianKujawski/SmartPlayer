@@ -76,14 +76,23 @@ namespace SmartPlayer.PlayerService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PlayerService.MPServiceSoap")]
-    public interface MPServiceSoap {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PlayerService.MpServiceSoap")]
+    public interface MpServiceSoap {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetUser", ReplyAction="*")]
         System.Threading.Tasks.Task<SmartPlayer.PlayerService.GetUserResponse> GetUserAsync(SmartPlayer.PlayerService.GetUserRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindSong", ReplyAction="*")]
         System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongResponse> FindSongAsync(SmartPlayer.PlayerService.FindSongRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindArtistId", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindArtistIdResponse> FindArtistIdAsync(SmartPlayer.PlayerService.FindArtistIdRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindAlbumId", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> FindAlbumIdAsync(SmartPlayer.PlayerService.FindAlbumIdRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindSongId", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> FindSongIdAsync(SmartPlayer.PlayerService.FindSongIdRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -223,13 +232,217 @@ namespace SmartPlayer.PlayerService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface MPServiceSoapChannel : SmartPlayer.PlayerService.MPServiceSoap, System.ServiceModel.IClientChannel {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindArtistIdRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindArtistId", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindArtistIdRequestBody Body;
+        
+        public FindArtistIdRequest() {
+        }
+        
+        public FindArtistIdRequest(SmartPlayer.PlayerService.FindArtistIdRequestBody Body) {
+            this.Body = Body;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MPServiceSoapClient : System.ServiceModel.ClientBase<SmartPlayer.PlayerService.MPServiceSoap>, SmartPlayer.PlayerService.MPServiceSoap {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindArtistIdRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string artist;
+        
+        public FindArtistIdRequestBody() {
+        }
+        
+        public FindArtistIdRequestBody(string artist) {
+            this.artist = artist;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindArtistIdResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindArtistIdResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindArtistIdResponseBody Body;
+        
+        public FindArtistIdResponse() {
+        }
+        
+        public FindArtistIdResponse(SmartPlayer.PlayerService.FindArtistIdResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindArtistIdResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public System.Nullable<int> FindArtistIdResult;
+        
+        public FindArtistIdResponseBody() {
+        }
+        
+        public FindArtistIdResponseBody(System.Nullable<int> FindArtistIdResult) {
+            this.FindArtistIdResult = FindArtistIdResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindAlbumIdRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindAlbumId", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindAlbumIdRequestBody Body;
+        
+        public FindAlbumIdRequest() {
+        }
+        
+        public FindAlbumIdRequest(SmartPlayer.PlayerService.FindAlbumIdRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindAlbumIdRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string alubm;
+        
+        public FindAlbumIdRequestBody() {
+        }
+        
+        public FindAlbumIdRequestBody(string alubm) {
+            this.alubm = alubm;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindAlbumIdResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindAlbumIdResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindAlbumIdResponseBody Body;
+        
+        public FindAlbumIdResponse() {
+        }
+        
+        public FindAlbumIdResponse(SmartPlayer.PlayerService.FindAlbumIdResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindAlbumIdResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public System.Nullable<int> FindAlbumIdResult;
+        
+        public FindAlbumIdResponseBody() {
+        }
+        
+        public FindAlbumIdResponseBody(System.Nullable<int> FindAlbumIdResult) {
+            this.FindAlbumIdResult = FindAlbumIdResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindSongIdRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindSongId", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindSongIdRequestBody Body;
+        
+        public FindSongIdRequest() {
+        }
+        
+        public FindSongIdRequest(SmartPlayer.PlayerService.FindSongIdRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindSongIdRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string song;
+        
+        public FindSongIdRequestBody() {
+        }
+        
+        public FindSongIdRequestBody(string song) {
+            this.song = song;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindSongIdResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindSongIdResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindSongIdResponseBody Body;
+        
+        public FindSongIdResponse() {
+        }
+        
+        public FindSongIdResponse(SmartPlayer.PlayerService.FindSongIdResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindSongIdResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public System.Nullable<int> FindSongIdResult;
+        
+        public FindSongIdResponseBody() {
+        }
+        
+        public FindSongIdResponseBody(System.Nullable<int> FindSongIdResult) {
+            this.FindSongIdResult = FindSongIdResult;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface MpServiceSoapChannel : SmartPlayer.PlayerService.MpServiceSoap, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class MpServiceSoapClient : System.ServiceModel.ClientBase<SmartPlayer.PlayerService.MpServiceSoap>, SmartPlayer.PlayerService.MpServiceSoap {
         
         /// <summary>
         /// Implement this partial method to configure the service endpoint.
@@ -238,47 +451,47 @@ namespace SmartPlayer.PlayerService {
         /// <param name="clientCredentials">The client credentials</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
         
-        public MPServiceSoapClient() : 
-                base(MPServiceSoapClient.GetDefaultBinding(), MPServiceSoapClient.GetDefaultEndpointAddress()) {
-            this.Endpoint.Name = EndpointConfiguration.MPServiceSoap.ToString();
+        public MpServiceSoapClient() : 
+                base(MpServiceSoapClient.GetDefaultBinding(), MpServiceSoapClient.GetDefaultEndpointAddress()) {
+            this.Endpoint.Name = EndpointConfiguration.MpServiceSoap.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public MPServiceSoapClient(EndpointConfiguration endpointConfiguration) : 
-                base(MPServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), MPServiceSoapClient.GetEndpointAddress(endpointConfiguration)) {
+        public MpServiceSoapClient(EndpointConfiguration endpointConfiguration) : 
+                base(MpServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), MpServiceSoapClient.GetEndpointAddress(endpointConfiguration)) {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public MPServiceSoapClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
-                base(MPServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
+        public MpServiceSoapClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+                base(MpServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public MPServiceSoapClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(MPServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress) {
+        public MpServiceSoapClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(MpServiceSoapClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress) {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public MPServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public MpServiceSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<SmartPlayer.PlayerService.GetUserResponse> SmartPlayer.PlayerService.MPServiceSoap.GetUserAsync(SmartPlayer.PlayerService.GetUserRequest request) {
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.GetUserResponse> SmartPlayer.PlayerService.MpServiceSoap.GetUserAsync(SmartPlayer.PlayerService.GetUserRequest request) {
             return base.Channel.GetUserAsync(request);
         }
         
         public System.Threading.Tasks.Task<SmartPlayer.PlayerService.GetUserResponse> GetUserAsync() {
             SmartPlayer.PlayerService.GetUserRequest inValue = new SmartPlayer.PlayerService.GetUserRequest();
             inValue.Body = new SmartPlayer.PlayerService.GetUserRequestBody();
-            return ((SmartPlayer.PlayerService.MPServiceSoap)(this)).GetUserAsync(inValue);
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).GetUserAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongResponse> SmartPlayer.PlayerService.MPServiceSoap.FindSongAsync(SmartPlayer.PlayerService.FindSongRequest request) {
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongResponse> SmartPlayer.PlayerService.MpServiceSoap.FindSongAsync(SmartPlayer.PlayerService.FindSongRequest request) {
             return base.Channel.FindSongAsync(request);
         }
         
@@ -288,7 +501,43 @@ namespace SmartPlayer.PlayerService {
             inValue.Body.title = title;
             inValue.Body.album = album;
             inValue.Body.artist = artist;
-            return ((SmartPlayer.PlayerService.MPServiceSoap)(this)).FindSongAsync(inValue);
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindSongAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindArtistIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindArtistIdAsync(SmartPlayer.PlayerService.FindArtistIdRequest request) {
+            return base.Channel.FindArtistIdAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindArtistIdResponse> FindArtistIdAsync(string artist) {
+            SmartPlayer.PlayerService.FindArtistIdRequest inValue = new SmartPlayer.PlayerService.FindArtistIdRequest();
+            inValue.Body = new SmartPlayer.PlayerService.FindArtistIdRequestBody();
+            inValue.Body.artist = artist;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindArtistIdAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindAlbumIdAsync(SmartPlayer.PlayerService.FindAlbumIdRequest request) {
+            return base.Channel.FindAlbumIdAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> FindAlbumIdAsync(string alubm) {
+            SmartPlayer.PlayerService.FindAlbumIdRequest inValue = new SmartPlayer.PlayerService.FindAlbumIdRequest();
+            inValue.Body = new SmartPlayer.PlayerService.FindAlbumIdRequestBody();
+            inValue.Body.alubm = alubm;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindAlbumIdAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindSongIdAsync(SmartPlayer.PlayerService.FindSongIdRequest request) {
+            return base.Channel.FindSongIdAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> FindSongIdAsync(string song) {
+            SmartPlayer.PlayerService.FindSongIdRequest inValue = new SmartPlayer.PlayerService.FindSongIdRequest();
+            inValue.Body = new SmartPlayer.PlayerService.FindSongIdRequestBody();
+            inValue.Body.song = song;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindSongIdAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {
@@ -300,7 +549,7 @@ namespace SmartPlayer.PlayerService {
         }
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration) {
-            if ((endpointConfiguration == EndpointConfiguration.MPServiceSoap)) {
+            if ((endpointConfiguration == EndpointConfiguration.MpServiceSoap)) {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
                 result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
@@ -312,23 +561,23 @@ namespace SmartPlayer.PlayerService {
         }
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration) {
-            if ((endpointConfiguration == EndpointConfiguration.MPServiceSoap)) {
+            if ((endpointConfiguration == EndpointConfiguration.MpServiceSoap)) {
                 return new System.ServiceModel.EndpointAddress("http://localhost:55573/MPService.asmx");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding() {
-            return MPServiceSoapClient.GetBindingForEndpoint(EndpointConfiguration.MPServiceSoap);
+            return MpServiceSoapClient.GetBindingForEndpoint(EndpointConfiguration.MpServiceSoap);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress() {
-            return MPServiceSoapClient.GetEndpointAddress(EndpointConfiguration.MPServiceSoap);
+            return MpServiceSoapClient.GetEndpointAddress(EndpointConfiguration.MpServiceSoap);
         }
         
         public enum EndpointConfiguration {
             
-            MPServiceSoap,
+            MpServiceSoap,
         }
     }
 }

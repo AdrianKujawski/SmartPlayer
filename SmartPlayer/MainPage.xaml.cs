@@ -140,12 +140,16 @@ namespace SmartPlayer
 				var selectedSong = ListViewSongs.SelectedItem as Song;
 				MediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
 				SongName.Text = selectedSong.GetFullName();
+
 				bool isSongExist = await Service.IsSongExist(selectedSong.Title, selectedSong.Album, selectedSong.Artist);
 
 				if (isSongExist)
 					NotifyUser("Piosenka znaleziona", NotifyType.StatusMessage);
 				else
-					NotifyUser("Nie znaleziono piosenki", NotifyType.ErrorMessage);
+					NotifyUser("Piosenka zostanie dodana do bazdy...", NotifyType.ErrorMessage);
+
+				int? value = await Service.GetArtistId(selectedSong.Artist);
+				StatusText.Text += " ID: " + value;
 			}
 			catch (Exception exc)
 			{

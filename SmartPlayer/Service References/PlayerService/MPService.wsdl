@@ -40,6 +40,48 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="FindArtistId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="artist" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindArtistIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindArtistIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindAlbumId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="alubm" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindAlbumIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindAlbumIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindSongId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="song" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindSongIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindSongIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetUserSoapIn">
@@ -54,7 +96,25 @@
   <wsdl:message name="FindSongSoapOut">
     <wsdl:part name="parameters" element="tns:FindSongResponse" />
   </wsdl:message>
-  <wsdl:portType name="MPServiceSoap">
+  <wsdl:message name="FindArtistIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindArtistId" />
+  </wsdl:message>
+  <wsdl:message name="FindArtistIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindArtistIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindAlbumIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindAlbumId" />
+  </wsdl:message>
+  <wsdl:message name="FindAlbumIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindAlbumIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindSongIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindSongId" />
+  </wsdl:message>
+  <wsdl:message name="FindSongIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindSongIdResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MpServiceSoap">
     <wsdl:operation name="GetUser">
       <wsdl:input message="tns:GetUserSoapIn" />
       <wsdl:output message="tns:GetUserSoapOut" />
@@ -63,8 +123,20 @@
       <wsdl:input message="tns:FindSongSoapIn" />
       <wsdl:output message="tns:FindSongSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="FindArtistId">
+      <wsdl:input message="tns:FindArtistIdSoapIn" />
+      <wsdl:output message="tns:FindArtistIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindAlbumId">
+      <wsdl:input message="tns:FindAlbumIdSoapIn" />
+      <wsdl:output message="tns:FindAlbumIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindSongId">
+      <wsdl:input message="tns:FindSongIdSoapIn" />
+      <wsdl:output message="tns:FindSongIdSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="MPServiceSoap" type="tns:MPServiceSoap">
+  <wsdl:binding name="MpServiceSoap" type="tns:MpServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetUser">
       <soap:operation soapAction="http://tempuri.org/GetUser" style="document" />
@@ -84,8 +156,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindArtistId">
+      <soap:operation soapAction="http://tempuri.org/FindArtistId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindAlbumId">
+      <soap:operation soapAction="http://tempuri.org/FindAlbumId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindSongId">
+      <soap:operation soapAction="http://tempuri.org/FindSongId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="MPServiceSoap12" type="tns:MPServiceSoap">
+  <wsdl:binding name="MpServiceSoap12" type="tns:MpServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetUser">
       <soap12:operation soapAction="http://tempuri.org/GetUser" style="document" />
@@ -105,12 +204,39 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindArtistId">
+      <soap12:operation soapAction="http://tempuri.org/FindArtistId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindAlbumId">
+      <soap12:operation soapAction="http://tempuri.org/FindAlbumId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindSongId">
+      <soap12:operation soapAction="http://tempuri.org/FindSongId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="MPService">
-    <wsdl:port name="MPServiceSoap" binding="tns:MPServiceSoap">
+  <wsdl:service name="MpService">
+    <wsdl:port name="MpServiceSoap" binding="tns:MpServiceSoap">
       <soap:address location="http://localhost:55573/MPService.asmx" />
     </wsdl:port>
-    <wsdl:port name="MPServiceSoap12" binding="tns:MPServiceSoap12">
+    <wsdl:port name="MpServiceSoap12" binding="tns:MpServiceSoap12">
       <soap12:address location="http://localhost:55573/MPService.asmx" />
     </wsdl:port>
   </wsdl:service>
