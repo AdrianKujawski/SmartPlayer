@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using Windows.Storage;
 using SmartPlayer.Model;
 using Windows.UI.Xaml.Media.Imaging;
@@ -10,7 +11,7 @@ namespace SmartPlayer.Controller
 	internal class MusicPlayer
 	{
 		public static ObservableCollection<Song> Songs { set; get; }
-
+		private static Song _song;
 		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
 		{
 			CreateSong(files);
@@ -51,6 +52,5 @@ namespace SmartPlayer.Controller
 				Songs.Add(newSong);
 			}
 		}
-
 	}
 }

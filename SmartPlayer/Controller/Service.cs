@@ -24,5 +24,36 @@ namespace SmartPlayer.Controller {
 			var result = await _soapClient.FindArtistIdAsync(artist);
 			return result.Body.FindArtistIdResult;
 		}
+
+		public static async Task<int?> GetAlbumId(string album) {
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.FindAlbumIdAsync(album);
+			return result.Body.FindAlbumIdResult;
+		}
+
+		public static async Task<int?> GetTitleId(string title) {
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.FindTitleIdAsync(title);
+			return result.Body.FindTitleIdResult;
+		}
+
+		public static async Task<bool> InsertArtist(string artist)
+		{
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.InsertArtistAsync(artist);
+			return result.Body.InsertArtistResult;
+		}
+
+		public static async Task<bool> InsertAlbum(string album, int? artistId) {
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.InsertAlbumAsync(album, artistId);
+			return result.Body.InsertAlbumResult;
+		}
+
+		public static async Task<bool> InsertTitle(string title, int? albumId) {
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.InsertTitleAsync(title, albumId);
+			return result.Body.InsertTitleResult;
+		}
 	}
 }

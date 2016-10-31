@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Controller\Service.cs" />
     <Compile Include="Controller\MusicPlayer.cs" />
+    <Compile Include="Controller\SongAdder.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

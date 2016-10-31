@@ -91,8 +91,17 @@ namespace SmartPlayer.PlayerService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindAlbumId", ReplyAction="*")]
         System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> FindAlbumIdAsync(SmartPlayer.PlayerService.FindAlbumIdRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindSongId", ReplyAction="*")]
-        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> FindSongIdAsync(SmartPlayer.PlayerService.FindSongIdRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindTitleId", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindTitleIdResponse> FindTitleIdAsync(SmartPlayer.PlayerService.FindTitleIdRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertArtist", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertArtistResponse> InsertArtistAsync(SmartPlayer.PlayerService.InsertArtistRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertAlbum", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertAlbumResponse> InsertAlbumAsync(SmartPlayer.PlayerService.InsertAlbumRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertTitle", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertTitleResponse> InsertTitleAsync(SmartPlayer.PlayerService.InsertTitleRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -324,13 +333,13 @@ namespace SmartPlayer.PlayerService {
     public partial class FindAlbumIdRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string alubm;
+        public string album;
         
         public FindAlbumIdRequestBody() {
         }
         
-        public FindAlbumIdRequestBody(string alubm) {
-            this.alubm = alubm;
+        public FindAlbumIdRequestBody(string album) {
+            this.album = album;
         }
     }
     
@@ -372,15 +381,15 @@ namespace SmartPlayer.PlayerService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class FindSongIdRequest {
+    public partial class FindTitleIdRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindSongId", Namespace="http://tempuri.org/", Order=0)]
-        public SmartPlayer.PlayerService.FindSongIdRequestBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindTitleId", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindTitleIdRequestBody Body;
         
-        public FindSongIdRequest() {
+        public FindTitleIdRequest() {
         }
         
-        public FindSongIdRequest(SmartPlayer.PlayerService.FindSongIdRequestBody Body) {
+        public FindTitleIdRequest(SmartPlayer.PlayerService.FindTitleIdRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -389,16 +398,16 @@ namespace SmartPlayer.PlayerService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class FindSongIdRequestBody {
+    public partial class FindTitleIdRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string song;
+        public string title;
         
-        public FindSongIdRequestBody() {
+        public FindTitleIdRequestBody() {
         }
         
-        public FindSongIdRequestBody(string song) {
-            this.song = song;
+        public FindTitleIdRequestBody(string title) {
+            this.title = title;
         }
     }
     
@@ -406,15 +415,15 @@ namespace SmartPlayer.PlayerService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class FindSongIdResponse {
+    public partial class FindTitleIdResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindSongIdResponse", Namespace="http://tempuri.org/", Order=0)]
-        public SmartPlayer.PlayerService.FindSongIdResponseBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindTitleIdResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindTitleIdResponseBody Body;
         
-        public FindSongIdResponse() {
+        public FindTitleIdResponse() {
         }
         
-        public FindSongIdResponse(SmartPlayer.PlayerService.FindSongIdResponseBody Body) {
+        public FindTitleIdResponse(SmartPlayer.PlayerService.FindTitleIdResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -423,16 +432,228 @@ namespace SmartPlayer.PlayerService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class FindSongIdResponseBody {
+    public partial class FindTitleIdResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
-        public System.Nullable<int> FindSongIdResult;
+        public System.Nullable<int> FindTitleIdResult;
         
-        public FindSongIdResponseBody() {
+        public FindTitleIdResponseBody() {
         }
         
-        public FindSongIdResponseBody(System.Nullable<int> FindSongIdResult) {
-            this.FindSongIdResult = FindSongIdResult;
+        public FindTitleIdResponseBody(System.Nullable<int> FindTitleIdResult) {
+            this.FindTitleIdResult = FindTitleIdResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertArtistRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertArtist", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertArtistRequestBody Body;
+        
+        public InsertArtistRequest() {
+        }
+        
+        public InsertArtistRequest(SmartPlayer.PlayerService.InsertArtistRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertArtistRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string artist;
+        
+        public InsertArtistRequestBody() {
+        }
+        
+        public InsertArtistRequestBody(string artist) {
+            this.artist = artist;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertArtistResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertArtistResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertArtistResponseBody Body;
+        
+        public InsertArtistResponse() {
+        }
+        
+        public InsertArtistResponse(SmartPlayer.PlayerService.InsertArtistResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertArtistResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool InsertArtistResult;
+        
+        public InsertArtistResponseBody() {
+        }
+        
+        public InsertArtistResponseBody(bool InsertArtistResult) {
+            this.InsertArtistResult = InsertArtistResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertAlbumRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertAlbum", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertAlbumRequestBody Body;
+        
+        public InsertAlbumRequest() {
+        }
+        
+        public InsertAlbumRequest(SmartPlayer.PlayerService.InsertAlbumRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertAlbumRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string album;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public System.Nullable<int> artistId;
+        
+        public InsertAlbumRequestBody() {
+        }
+        
+        public InsertAlbumRequestBody(string album, System.Nullable<int> artistId) {
+            this.album = album;
+            this.artistId = artistId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertAlbumResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertAlbumResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertAlbumResponseBody Body;
+        
+        public InsertAlbumResponse() {
+        }
+        
+        public InsertAlbumResponse(SmartPlayer.PlayerService.InsertAlbumResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertAlbumResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool InsertAlbumResult;
+        
+        public InsertAlbumResponseBody() {
+        }
+        
+        public InsertAlbumResponseBody(bool InsertAlbumResult) {
+            this.InsertAlbumResult = InsertAlbumResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertTitleRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertTitle", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertTitleRequestBody Body;
+        
+        public InsertTitleRequest() {
+        }
+        
+        public InsertTitleRequest(SmartPlayer.PlayerService.InsertTitleRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertTitleRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string artist;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public System.Nullable<int> albumId;
+        
+        public InsertTitleRequestBody() {
+        }
+        
+        public InsertTitleRequestBody(string artist, System.Nullable<int> albumId) {
+            this.artist = artist;
+            this.albumId = albumId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertTitleResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertTitleResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.InsertTitleResponseBody Body;
+        
+        public InsertTitleResponse() {
+        }
+        
+        public InsertTitleResponse(SmartPlayer.PlayerService.InsertTitleResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class InsertTitleResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool InsertTitleResult;
+        
+        public InsertTitleResponseBody() {
+        }
+        
+        public InsertTitleResponseBody(bool InsertTitleResult) {
+            this.InsertTitleResult = InsertTitleResult;
         }
     }
     
@@ -521,23 +742,61 @@ namespace SmartPlayer.PlayerService {
             return base.Channel.FindAlbumIdAsync(request);
         }
         
-        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> FindAlbumIdAsync(string alubm) {
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindAlbumIdResponse> FindAlbumIdAsync(string album) {
             SmartPlayer.PlayerService.FindAlbumIdRequest inValue = new SmartPlayer.PlayerService.FindAlbumIdRequest();
             inValue.Body = new SmartPlayer.PlayerService.FindAlbumIdRequestBody();
-            inValue.Body.alubm = alubm;
+            inValue.Body.album = album;
             return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindAlbumIdAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindSongIdAsync(SmartPlayer.PlayerService.FindSongIdRequest request) {
-            return base.Channel.FindSongIdAsync(request);
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindTitleIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindTitleIdAsync(SmartPlayer.PlayerService.FindTitleIdRequest request) {
+            return base.Channel.FindTitleIdAsync(request);
         }
         
-        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindSongIdResponse> FindSongIdAsync(string song) {
-            SmartPlayer.PlayerService.FindSongIdRequest inValue = new SmartPlayer.PlayerService.FindSongIdRequest();
-            inValue.Body = new SmartPlayer.PlayerService.FindSongIdRequestBody();
-            inValue.Body.song = song;
-            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindSongIdAsync(inValue);
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindTitleIdResponse> FindTitleIdAsync(string title) {
+            SmartPlayer.PlayerService.FindTitleIdRequest inValue = new SmartPlayer.PlayerService.FindTitleIdRequest();
+            inValue.Body = new SmartPlayer.PlayerService.FindTitleIdRequestBody();
+            inValue.Body.title = title;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindTitleIdAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertArtistResponse> SmartPlayer.PlayerService.MpServiceSoap.InsertArtistAsync(SmartPlayer.PlayerService.InsertArtistRequest request) {
+            return base.Channel.InsertArtistAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertArtistResponse> InsertArtistAsync(string artist) {
+            SmartPlayer.PlayerService.InsertArtistRequest inValue = new SmartPlayer.PlayerService.InsertArtistRequest();
+            inValue.Body = new SmartPlayer.PlayerService.InsertArtistRequestBody();
+            inValue.Body.artist = artist;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).InsertArtistAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertAlbumResponse> SmartPlayer.PlayerService.MpServiceSoap.InsertAlbumAsync(SmartPlayer.PlayerService.InsertAlbumRequest request) {
+            return base.Channel.InsertAlbumAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertAlbumResponse> InsertAlbumAsync(string album, System.Nullable<int> artistId) {
+            SmartPlayer.PlayerService.InsertAlbumRequest inValue = new SmartPlayer.PlayerService.InsertAlbumRequest();
+            inValue.Body = new SmartPlayer.PlayerService.InsertAlbumRequestBody();
+            inValue.Body.album = album;
+            inValue.Body.artistId = artistId;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).InsertAlbumAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertTitleResponse> SmartPlayer.PlayerService.MpServiceSoap.InsertTitleAsync(SmartPlayer.PlayerService.InsertTitleRequest request) {
+            return base.Channel.InsertTitleAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertTitleResponse> InsertTitleAsync(string artist, System.Nullable<int> albumId) {
+            SmartPlayer.PlayerService.InsertTitleRequest inValue = new SmartPlayer.PlayerService.InsertTitleRequest();
+            inValue.Body = new SmartPlayer.PlayerService.InsertTitleRequestBody();
+            inValue.Body.artist = artist;
+            inValue.Body.albumId = albumId;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).InsertTitleAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

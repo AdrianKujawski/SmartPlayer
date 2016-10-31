@@ -57,7 +57,7 @@
       <s:element name="FindAlbumId">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="alubm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="album" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -68,17 +68,61 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="FindSongId">
+      <s:element name="FindTitleId">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="song" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="FindSongIdResponse">
+      <s:element name="FindTitleIdResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="FindSongIdResult" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="FindTitleIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertArtist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="artist" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertArtistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertArtistResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertAlbum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="album" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="artistId" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertAlbumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertAlbumResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="artist" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="albumId" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertTitleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertTitleResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -108,11 +152,29 @@
   <wsdl:message name="FindAlbumIdSoapOut">
     <wsdl:part name="parameters" element="tns:FindAlbumIdResponse" />
   </wsdl:message>
-  <wsdl:message name="FindSongIdSoapIn">
-    <wsdl:part name="parameters" element="tns:FindSongId" />
+  <wsdl:message name="FindTitleIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindTitleId" />
   </wsdl:message>
-  <wsdl:message name="FindSongIdSoapOut">
-    <wsdl:part name="parameters" element="tns:FindSongIdResponse" />
+  <wsdl:message name="FindTitleIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindTitleIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertArtistSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertArtist" />
+  </wsdl:message>
+  <wsdl:message name="InsertArtistSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertArtistResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertAlbumSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertAlbum" />
+  </wsdl:message>
+  <wsdl:message name="InsertAlbumSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertAlbumResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertTitle" />
+  </wsdl:message>
+  <wsdl:message name="InsertTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertTitleResponse" />
   </wsdl:message>
   <wsdl:portType name="MpServiceSoap">
     <wsdl:operation name="GetUser">
@@ -131,9 +193,21 @@
       <wsdl:input message="tns:FindAlbumIdSoapIn" />
       <wsdl:output message="tns:FindAlbumIdSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="FindSongId">
-      <wsdl:input message="tns:FindSongIdSoapIn" />
-      <wsdl:output message="tns:FindSongIdSoapOut" />
+    <wsdl:operation name="FindTitleId">
+      <wsdl:input message="tns:FindTitleIdSoapIn" />
+      <wsdl:output message="tns:FindTitleIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertArtist">
+      <wsdl:input message="tns:InsertArtistSoapIn" />
+      <wsdl:output message="tns:InsertArtistSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertAlbum">
+      <wsdl:input message="tns:InsertAlbumSoapIn" />
+      <wsdl:output message="tns:InsertAlbumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertTitle">
+      <wsdl:input message="tns:InsertTitleSoapIn" />
+      <wsdl:output message="tns:InsertTitleSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MpServiceSoap" type="tns:MpServiceSoap">
@@ -174,8 +248,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FindSongId">
-      <soap:operation soapAction="http://tempuri.org/FindSongId" style="document" />
+    <wsdl:operation name="FindTitleId">
+      <soap:operation soapAction="http://tempuri.org/FindTitleId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertArtist">
+      <soap:operation soapAction="http://tempuri.org/InsertArtist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAlbum">
+      <soap:operation soapAction="http://tempuri.org/InsertAlbum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertTitle">
+      <soap:operation soapAction="http://tempuri.org/InsertTitle" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -222,8 +323,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="FindSongId">
-      <soap12:operation soapAction="http://tempuri.org/FindSongId" style="document" />
+    <wsdl:operation name="FindTitleId">
+      <soap12:operation soapAction="http://tempuri.org/FindTitleId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertArtist">
+      <soap12:operation soapAction="http://tempuri.org/InsertArtist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAlbum">
+      <soap12:operation soapAction="http://tempuri.org/InsertAlbum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertTitle">
+      <soap12:operation soapAction="http://tempuri.org/InsertTitle" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

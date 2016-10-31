@@ -1,36 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using SmartPlayer.Controller;
 using SmartPlayer.Model;
-using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Media;
-
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace SmartPlayer
 {
 	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
+	///     An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 	public sealed partial class MainPage : Page
 	{
+		public enum NotifyType
+		{
+			StatusMessage,
+			ErrorMessage
+		}
+
 		private DispatcherTimer _dispatcherTimer;
-		private DispatcherTimer _timerSlider;
-		private DateTimeOffset _startTime;
+		private double _duractionSong;
 		private DateTimeOffset _lastTime;
-		private int minFormHeight;
-		private int minFormWidht;
+		private DateTimeOffset _startTime;
+		private DispatcherTimer _timerSlider;
+		private int actualSecond;
+		private double halfDuractionSong;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -40,19 +45,28 @@ namespace SmartPlayer
 			SongName.Text = "";
 		}
 
+		public void test(object sender, object e)
+		{
+			if (actualSecond >= halfDuractionSong)
+				NotifyUser("Piosenka przesluchana!", NotifyType.StatusMessage);
+			Debug.WriteLine(halfDuractionSong);
+			Debug.WriteLine(++actualSecond);
+		}
+
 		private void ListViewCreate()
 		{
 			MusicPlayer.Songs = new ObservableCollection<Song>();
 			ListViewSongs.ItemsSource = MusicPlayer.Songs;
 		}
+
 		private async void button_Click(object sender, RoutedEventArgs e)
 		{
 			await SetLocalMedia();
 		}
 
-		async private Task SetLocalMedia()
+		private async Task SetLocalMedia()
 		{
-			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+			var openPicker = new FileOpenPicker();
 
 			openPicker.FileTypeFilter.Add(".wmv");
 			openPicker.FileTypeFilter.Add(".wma");
@@ -65,20 +79,24 @@ namespace SmartPlayer
 				MusicPlayer.AddSongToPlaylist(file);
 				ListViewSongs.ItemsSource = MusicPlayer.Songs;
 			}
-
-			
 		}
 
 		private void mediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
 		{
-			int temp = (int) MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-
+			SetDurationSong();
 			TimelineSlider.Value = 0;
-			TimelineSlider.Maximum = temp;
+			TimelineSlider.Maximum = _duractionSong;
 
 			MediaPlayer.Volume = VolumeSlider.Value;
 			MediaPlayer.Play();
 			StartCountTimeSong();
+		}
+
+		private void SetDurationSong()
+		{
+			actualSecond = 0;
+			_duractionSong = (int) MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+			halfDuractionSong = Math.Floor(_duractionSong/2);
 		}
 
 		private void StartCountTimeSong()
@@ -92,6 +110,7 @@ namespace SmartPlayer
 
 				_startTime = DateTimeOffset.Now;
 				_lastTime = _startTime;
+				_dispatcherTimer.Tick += test;
 				_dispatcherTimer.Start();
 			}
 		}
@@ -108,9 +127,9 @@ namespace SmartPlayer
 
 		private void SeekToMediaPosition(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
 		{
-			int sliderValue = (int) TimelineSlider.Value;
+			var sliderValue = (int) TimelineSlider.Value;
 
-			TimeSpan ts = new TimeSpan(0, 0, 0, sliderValue, 0);
+			var ts = new TimeSpan(0, 0, 0, sliderValue, 0);
 			MediaPlayer.Position = ts;
 			ChangeTimeTextValue();
 		}
@@ -130,65 +149,72 @@ namespace SmartPlayer
 		{
 			Time.Text = "00:00:00";
 			TimelineSlider.Value = 0;
+			SetDurationSong();
 			MediaPlayer.Play();
 		}
 
 		private async void mediaPlayer_ItemClick(object sender, RoutedEventArgs e)
 		{
-			try 
+			try
 			{
 				var selectedSong = ListViewSongs.SelectedItem as Song;
 				MediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
 				SongName.Text = selectedSong.GetFullName();
 
-				bool isSongExist = await Service.IsSongExist(selectedSong.Title, selectedSong.Album, selectedSong.Artist);
+				var isSongExist = await Service.IsSongExist(selectedSong.Title, selectedSong.Album, selectedSong.Artist);
 
 				if (isSongExist)
-					NotifyUser("Piosenka znaleziona", NotifyType.StatusMessage);
+					NotifyUser(selectedSong.Title + " - istnieje.", NotifyType.StatusMessage);
 				else
-					NotifyUser("Piosenka zostanie dodana do bazdy...", NotifyType.ErrorMessage);
-
-				int? value = await Service.GetArtistId(selectedSong.Artist);
-				StatusText.Text += " ID: " + value;
+				{
+					NotifyUser("Piosenka zostanie dodana do bazy...", NotifyType.ErrorMessage);
+					var adder = new SongAdder(selectedSong);
+					try
+					{
+						adder.AddSong();
+						NotifyUser(selectedSong.Title + " - dodano do bazy.", NotifyType.StatusMessage);
+					}
+					catch (Exception exc)
+					{
+						NotifyUser("Coś poszło nie tak...", NotifyType.ErrorMessage);
+					}
+				}
 			}
 			catch (Exception exc)
 			{
 			}
 		}
 
-		public void NotifyUser(string strMessage, NotifyType type) {
-			switch (type) {
+		public void NotifyUser(string strMessage, NotifyType type)
+		{
+			switch (type)
+			{
 				case NotifyType.StatusMessage:
-					StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+					StatusBorder.Background = new SolidColorBrush(Colors.Green);
 					break;
 				case NotifyType.ErrorMessage:
-					StatusBorder.Background = new SolidColorBrush(Windows.UI.Colors.Red);
+					StatusBorder.Background = new SolidColorBrush(Colors.Red);
 					break;
 			}
 			StatusText.Text = strMessage;
 		}
 
-		public enum NotifyType 
-		{
-			StatusMessage,
-			ErrorMessage
-		};
-
 		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			Debug.WriteLine(MainLayout.ActualHeight);
-
 		}
 
 		private void StatisticButton_Click(object sender, RoutedEventArgs e)
 		{
-			bool isPlayerActiv = PlayerPanel.Visibility == Visibility.Visible;
+			var isPlayerActiv = PlayerPanel.Visibility == Visibility.Visible;
 
-			if (isPlayerActiv) {
+			if (isPlayerActiv)
+			{
 				PlayerPanel.Visibility = Visibility.Collapsed;
 				StatisticPanel.Visibility = Visibility.Visible;
 			}
-			else {
+			else
+			{
 				PlayerPanel.Visibility = Visibility.Visible;
 				StatisticPanel.Visibility = Visibility.Collapsed;
 			}
