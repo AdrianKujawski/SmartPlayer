@@ -43,7 +43,7 @@ namespace SmartPlayer.Controller
 			{
 				artistId = await Service.GetArtistId(_song.Artist);
 			} while (artistId == null);
-			Service.InsertAlbum(_song.Album, artistId);
+			await Service.InsertAlbum(_song.Album, artistId);
 		}
 
 		private async void InsertTitle()
@@ -53,13 +53,13 @@ namespace SmartPlayer.Controller
 			{
 				albumId = await Service.GetAlbumId(_song.Album);
 			} while (albumId == null);
-			
-			Service.InsertTitle(_song.Title, albumId);
+
+			await Service.InsertTitle(_song.Title, albumId);
 		}
 
 		private async void InsertArtist()
 		{
-			Service.InsertArtist(_song.Artist);
+			await Service.InsertArtist(_song.Artist);
 		}
 
 		private delegate void deleg();

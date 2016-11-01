@@ -12,6 +12,10 @@ namespace SmartPlayer.Controller
 	{
 		public static ObservableCollection<Song> Songs { set; get; }
 		private static Song _song;
+
+		public static User ActualUser { get; set; }
+		public static Song ActualSong { get; set; }
+
 		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
 		{
 			CreateSong(files);

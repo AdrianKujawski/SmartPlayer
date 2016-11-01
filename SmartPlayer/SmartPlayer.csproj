@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controller\RelationUpdater.cs" />
     <Compile Include="Controller\Service.cs" />
     <Compile Include="Controller\MusicPlayer.cs" />
     <Compile Include="Controller\SongAdder.cs" />
@@ -102,6 +103,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Song.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PlayerService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -115,10 +117,31 @@
     </AppxManifest>
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
     <None Include="Service References\PlayerService\MPService.wsdl" />
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindAlbumIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindArtistIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindSongResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindTitleIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindUserIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\PlayerService\SmartPlayer.PlayerService.GetUserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.HelloWorldResponse.datasource">
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.InsertAlbumResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.InsertArtistResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PlayerService\SmartPlayer.PlayerService.InsertTitleResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="SmartPlayer_TemporaryKey.pfx" />

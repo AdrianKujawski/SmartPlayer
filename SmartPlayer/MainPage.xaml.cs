@@ -35,7 +35,8 @@ namespace SmartPlayer
 		private DispatcherTimer _timerSlider;
 		private int actualSecond;
 		private double halfDuractionSong;
-
+		private readonly double _songDurationPart = 30;
+		private bool isUpdated;
 		public MainPage()
 		{
 			InitializeComponent();
@@ -43,14 +44,25 @@ namespace SmartPlayer
 			ListViewCreate();
 			ListViewSongs.Tapped += mediaPlayer_ItemClick;
 			SongName.Text = "";
+			isUpdated = false;
+			MusicPlayer.ActualUser = new User {Login = "AdrianXIX", Name = "Adek"};
 		}
 
-		public void test(object sender, object e)
+		public async void test(object sender, object e)
 		{
-			if (actualSecond >= halfDuractionSong)
+			Debug.WriteLine(string.Format("T: {0} >= {1}",actualSecond, halfDuractionSong));
+			if (actualSecond >= halfDuractionSong && !isUpdated)
+			{
+				isUpdated = true;
+				bool isExist = await RelationUpdater.IsRelationExist();
+				if (!isExist)
+				{
+					await RelationUpdater.AddUserSongRelation();
+				}
+				await RelationUpdater.UpdateSongQty();
 				NotifyUser("Piosenka przesluchana!", NotifyType.StatusMessage);
-			Debug.WriteLine(halfDuractionSong);
-			Debug.WriteLine(++actualSecond);
+			}
+			actualSecond++;
 		}
 
 		private void ListViewCreate()
@@ -94,9 +106,10 @@ namespace SmartPlayer
 
 		private void SetDurationSong()
 		{
+			isUpdated = false;
 			actualSecond = 0;
 			_duractionSong = (int) MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-			halfDuractionSong = Math.Floor(_duractionSong/2);
+			halfDuractionSong = Math.Floor(_duractionSong/_songDurationPart);
 		}
 
 		private void StartCountTimeSong()
@@ -158,6 +171,7 @@ namespace SmartPlayer
 			try
 			{
 				var selectedSong = ListViewSongs.SelectedItem as Song;
+				MusicPlayer.ActualSong = selectedSong;
 				MediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
 				SongName.Text = selectedSong.GetFullName();
 
@@ -173,6 +187,7 @@ namespace SmartPlayer
 					{
 						adder.AddSong();
 						NotifyUser(selectedSong.Title + " - dodano do bazy.", NotifyType.StatusMessage);
+						
 					}
 					catch (Exception exc)
 					{

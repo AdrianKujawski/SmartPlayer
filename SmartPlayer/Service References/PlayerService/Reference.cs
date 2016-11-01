@@ -102,6 +102,21 @@ namespace SmartPlayer.PlayerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertTitle", ReplyAction="*")]
         System.Threading.Tasks.Task<SmartPlayer.PlayerService.InsertTitleResponse> InsertTitleAsync(SmartPlayer.PlayerService.InsertTitleRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindUserId", ReplyAction="*")]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindUserIdResponse> FindUserIdAsync(SmartPlayer.PlayerService.FindUserIdRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertNewUserSong", ReplyAction="*")]
+        System.Threading.Tasks.Task<bool> InsertNewUserSongAsync(System.Nullable<int> userId, System.Nullable<int> titleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FindUserSongId", ReplyAction="*")]
+        System.Threading.Tasks.Task<System.Nullable<int>> FindUserSongIdAsync(System.Nullable<int> userId, System.Nullable<int> titleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSongUserQty", ReplyAction="*")]
+        System.Threading.Tasks.Task<System.Nullable<int>> GetSongUserQtyAsync(System.Nullable<int> userSongId, System.Nullable<int> titleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/UpdateUserSongQty", ReplyAction="*")]
+        System.Threading.Tasks.Task<bool> UpdateUserSongQtyAsync(System.Nullable<int> userSongId, System.Nullable<int> qty);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -657,6 +672,74 @@ namespace SmartPlayer.PlayerService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindUserIdRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindUserId", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindUserIdRequestBody Body;
+        
+        public FindUserIdRequest() {
+        }
+        
+        public FindUserIdRequest(SmartPlayer.PlayerService.FindUserIdRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindUserIdRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        public FindUserIdRequestBody() {
+        }
+        
+        public FindUserIdRequestBody(string login) {
+            this.login = login;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class FindUserIdResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="FindUserIdResponse", Namespace="http://tempuri.org/", Order=0)]
+        public SmartPlayer.PlayerService.FindUserIdResponseBody Body;
+        
+        public FindUserIdResponse() {
+        }
+        
+        public FindUserIdResponse(SmartPlayer.PlayerService.FindUserIdResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class FindUserIdResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public System.Nullable<int> FindUserIdResult;
+        
+        public FindUserIdResponseBody() {
+        }
+        
+        public FindUserIdResponseBody(System.Nullable<int> FindUserIdResult) {
+            this.FindUserIdResult = FindUserIdResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MpServiceSoapChannel : SmartPlayer.PlayerService.MpServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -797,6 +880,34 @@ namespace SmartPlayer.PlayerService {
             inValue.Body.artist = artist;
             inValue.Body.albumId = albumId;
             return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).InsertTitleAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindUserIdResponse> SmartPlayer.PlayerService.MpServiceSoap.FindUserIdAsync(SmartPlayer.PlayerService.FindUserIdRequest request) {
+            return base.Channel.FindUserIdAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SmartPlayer.PlayerService.FindUserIdResponse> FindUserIdAsync(string login) {
+            SmartPlayer.PlayerService.FindUserIdRequest inValue = new SmartPlayer.PlayerService.FindUserIdRequest();
+            inValue.Body = new SmartPlayer.PlayerService.FindUserIdRequestBody();
+            inValue.Body.login = login;
+            return ((SmartPlayer.PlayerService.MpServiceSoap)(this)).FindUserIdAsync(inValue);
+        }
+        
+        public System.Threading.Tasks.Task<bool> InsertNewUserSongAsync(System.Nullable<int> userId, System.Nullable<int> titleId) {
+            return base.Channel.InsertNewUserSongAsync(userId, titleId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<int>> FindUserSongIdAsync(System.Nullable<int> userId, System.Nullable<int> titleId) {
+            return base.Channel.FindUserSongIdAsync(userId, titleId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<int>> GetSongUserQtyAsync(System.Nullable<int> userSongId, System.Nullable<int> titleId) {
+            return base.Channel.GetSongUserQtyAsync(userSongId, titleId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateUserSongQtyAsync(System.Nullable<int> userSongId, System.Nullable<int> qty) {
+            return base.Channel.UpdateUserSongQtyAsync(userSongId, qty);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

@@ -126,6 +126,80 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="FindUserId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindUserIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindUserIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertNewUserSong">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="titleId" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertNewUserSongResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertNewUserSongResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindUserSongId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="titleId" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindUserSongIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FindUserSongIdResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSongUserQty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userSongId" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="titleId" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSongUserQtyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetSongUserQtyResult" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserSongQty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userSongId" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="qty" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserSongQtyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateUserSongQtyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetUserSoapIn">
@@ -176,6 +250,36 @@
   <wsdl:message name="InsertTitleSoapOut">
     <wsdl:part name="parameters" element="tns:InsertTitleResponse" />
   </wsdl:message>
+  <wsdl:message name="FindUserIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindUserId" />
+  </wsdl:message>
+  <wsdl:message name="FindUserIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertNewUserSongSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertNewUserSong" />
+  </wsdl:message>
+  <wsdl:message name="InsertNewUserSongSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertNewUserSongResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindUserSongIdSoapIn">
+    <wsdl:part name="parameters" element="tns:FindUserSongId" />
+  </wsdl:message>
+  <wsdl:message name="FindUserSongIdSoapOut">
+    <wsdl:part name="parameters" element="tns:FindUserSongIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSongUserQtySoapIn">
+    <wsdl:part name="parameters" element="tns:GetSongUserQty" />
+  </wsdl:message>
+  <wsdl:message name="GetSongUserQtySoapOut">
+    <wsdl:part name="parameters" element="tns:GetSongUserQtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSongQtySoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserSongQty" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSongQtySoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserSongQtyResponse" />
+  </wsdl:message>
   <wsdl:portType name="MpServiceSoap">
     <wsdl:operation name="GetUser">
       <wsdl:input message="tns:GetUserSoapIn" />
@@ -208,6 +312,26 @@
     <wsdl:operation name="InsertTitle">
       <wsdl:input message="tns:InsertTitleSoapIn" />
       <wsdl:output message="tns:InsertTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindUserId">
+      <wsdl:input message="tns:FindUserIdSoapIn" />
+      <wsdl:output message="tns:FindUserIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertNewUserSong">
+      <wsdl:input message="tns:InsertNewUserSongSoapIn" />
+      <wsdl:output message="tns:InsertNewUserSongSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindUserSongId">
+      <wsdl:input message="tns:FindUserSongIdSoapIn" />
+      <wsdl:output message="tns:FindUserSongIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSongUserQty">
+      <wsdl:input message="tns:GetSongUserQtySoapIn" />
+      <wsdl:output message="tns:GetSongUserQtySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSongQty">
+      <wsdl:input message="tns:UpdateUserSongQtySoapIn" />
+      <wsdl:output message="tns:UpdateUserSongQtySoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MpServiceSoap" type="tns:MpServiceSoap">
@@ -284,6 +408,51 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindUserId">
+      <soap:operation soapAction="http://tempuri.org/FindUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertNewUserSong">
+      <soap:operation soapAction="http://tempuri.org/InsertNewUserSong" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindUserSongId">
+      <soap:operation soapAction="http://tempuri.org/FindUserSongId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSongUserQty">
+      <soap:operation soapAction="http://tempuri.org/GetSongUserQty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSongQty">
+      <soap:operation soapAction="http://tempuri.org/UpdateUserSongQty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="MpServiceSoap12" type="tns:MpServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -352,6 +521,51 @@
     </wsdl:operation>
     <wsdl:operation name="InsertTitle">
       <soap12:operation soapAction="http://tempuri.org/InsertTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindUserId">
+      <soap12:operation soapAction="http://tempuri.org/FindUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertNewUserSong">
+      <soap12:operation soapAction="http://tempuri.org/InsertNewUserSong" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindUserSongId">
+      <soap12:operation soapAction="http://tempuri.org/FindUserSongId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSongUserQty">
+      <soap12:operation soapAction="http://tempuri.org/GetSongUserQty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserSongQty">
+      <soap12:operation soapAction="http://tempuri.org/UpdateUserSongQty" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
