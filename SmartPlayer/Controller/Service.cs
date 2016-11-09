@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartPlayer.Model;
 using SmartPlayer.PlayerService;
+using ServiceSong = SmartPlayer.PlayerService.ServiceSong;
 
 namespace SmartPlayer.Controller {
 	class Service
@@ -80,6 +83,19 @@ namespace SmartPlayer.Controller {
 		public static async Task<bool> UpdateUserSongQty(int? userSongId, int? qty) {
 			_soapClient = new MpServiceSoapClient();
 			return await _soapClient.UpdateUserSongQtyAsync(userSongId, qty);
+		}
+
+		public static async Task<ServiceSong[]> GetSongsAndQty(string userLogin) {
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.GetSongsAndQtyAsync(userLogin);
+			return result.Body.GetSongsAndQtyResult;
+		}
+
+		public static async Task<ServiceUser> GetUser(string userLogin)
+		{
+			_soapClient = new MpServiceSoapClient();
+			var result = await _soapClient.GetUserAsync(userLogin);
+			return result.Body.GetUserResult;
 		}
 	}
 }

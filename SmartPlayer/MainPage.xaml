@@ -7,7 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:model="using:SmartPlayer.Model"
-	mc:Ignorable="d" Width="Auto" Height="Auto" SizeChanged="Page_SizeChanged">
+	mc:Ignorable="d" Width="Auto" Height="Auto">
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -37,11 +37,11 @@
 						<ColumnDefinition Width="100" />
 					</Grid.ColumnDefinitions>
 
-					<Button x:Name="StopButton" Content="1" Margin="10" Grid.Column="1" />
-					<Button x:Name="PreviousButton" Content="2" Margin="10" Grid.Column="2" />
-					<Button x:Name="PlayPauseButton" Content="3" Margin="10" Grid.Column="3" />
-					<Button x:Name="NextButton" Content="4" Margin="10" Grid.Column="4" />
-					<Button x:Name="MuteButton" Content="5" Margin="10" Grid.Column="5" />
+					<Button x:Name="StopButton" Content="[]" Margin="10" Grid.Column="1" Click="StopSong" />
+					<Button x:Name="PreviousButton" Content="&#60;" Margin="10" Grid.Column="2" Click="NextSong"/>
+					<Button x:Name="PlayPauseButton" Content="||" Margin="10" Grid.Column="3" Click="ChangePlayingState"/>
+					<Button x:Name="NextButton" Content=">" Margin="10" Grid.Column="4" Click="NextSong" />
+					<Button x:Name="MuteButton" Content="M" Margin="10" Grid.Column="5" Click="Mute"/>
 				</Grid>
 
 				<Grid>
@@ -93,6 +93,30 @@
 			</Grid.RowDefinitions>
 
 			<Button Margin="10" Content="Statystyki" Click="StatisticButton_Click" HorizontalAlignment="Stretch" />
+
+			<ListView x:Name="StatisticListSong" Margin="10" Background="{ThemeResource ButtonDisabledBorderThemeBrush}"
+			          Grid.Row="1">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<Grid Height="40">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<Border Background="DarkGray" Width="30" Height="30">
+								<TextBlock Text="{Binding Qty}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							</Border>
+
+							<StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+								<TextBlock Text="{Binding Title}" FontSize="14" />
+								<TextBlock Text="{Binding Artist}" FontSize="12" />
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			
 		</Grid>
 	</Grid>
 </Page>

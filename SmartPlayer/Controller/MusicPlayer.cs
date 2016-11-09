@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Windows.Storage;
 using SmartPlayer.Model;
 using Windows.UI.Xaml.Media.Imaging;
+using SmartPlayer.PlayerService;
+using User = SmartPlayer.Model.User;
 
 namespace SmartPlayer.Controller
 {
 	internal class MusicPlayer
 	{
 		public static ObservableCollection<Song> Songs { set; get; }
+		public static ObservableCollection<ServiceSong> StatisticCollectionSongs { get; set; }
 		private static Song _song;
 
 		public static User ActualUser { get; set; }
 		public static Song ActualSong { get; set; }
+		public static bool IsSongPlaying{ get; set; }
+		public static bool IsStopped{ get; set; }
 
 		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
 		{
 			CreateSong(files);
 		}
+
 
 		private static async void CreateSong(IEnumerable<StorageFile> files)
 		{
@@ -55,6 +63,33 @@ namespace SmartPlayer.Controller
 
 				Songs.Add(newSong);
 			}
+		}
+
+		public static async Task ConvertServiceSong()
+		{
+			if(StatisticCollectionSongs == null)
+				StatisticCollectionSongs = new ObservableCollection<ServiceSong>();
+
+			StatisticCollectionSongs.Clear();
+			var songs = await Service.GetSongsAndQty(ActualUser.GetLogin());
+
+			if (songs == null)
+				return;
+
+			var lenght = songs.Length;
+			for (int i = 0; i < lenght; i++)
+			{
+				var song = songs[i];
+				StatisticCollectionSongs.Add(song);
+			}
+
+			Sort<ServiceSong>(StatisticCollectionSongs);
+		}
+
+		public static void Sort<T>(ObservableCollection<T> collection){
+			List<T> sorted = collection.OrderBy(x => x).ToList();
+			for (int i = 0; i < sorted.Count(); i++)
+				collection.Move(collection.IndexOf(sorted[i]), i);
 		}
 	}
 }

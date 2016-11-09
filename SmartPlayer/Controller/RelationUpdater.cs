@@ -46,7 +46,7 @@ namespace SmartPlayer.Controller {
 		private static async Task<bool> SetData()
 		{
 				_titleId = await Service.GetTitleId(MusicPlayer.ActualSong.Title);
-				_userId = await Service.GetUserId(MusicPlayer.ActualUser.Login);;
+				_userId = await Service.GetUserId(MusicPlayer.ActualUser.GetLogin());;
 
 			return true;
 		}

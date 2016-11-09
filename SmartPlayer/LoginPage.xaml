@@ -1,0 +1,31 @@
+﻿<Page
+	x:Class="SmartPlayer.LoginPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:SmartPlayer"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d">
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+			<RelativePanel>
+				<TextBlock Margin="5" Name="TextBlock" Text="Zaloguj się" FontSize="20" TextAlignment="Center" MinWidth="500" />
+				<Grid Name="Grid"  RelativePanel.Below="TextBlock" RelativePanel.AlignLeftWith="TextBlock" RelativePanel.AlignRightWith="TextBlock">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<TextBox Name="LoginBox" Margin="5"/>
+					<TextBox Name="PasswordBox" Margin="5" Grid.Column="1" />
+				</Grid>
+				<Button Name="LoignButton" Margin="5" Content="OK" HorizontalAlignment="Stretch" RelativePanel.Below="Grid" RelativePanel.AlignLeftWith="Grid" RelativePanel.AlignRightWith="Grid" Click="SignIn"/>
+				<Border Visibility="Collapsed" Name="InfoPanel" Margin="5" Background="Red" MaxHeight="50" HorizontalAlignment="Stretch" RelativePanel.Below="LoignButton" RelativePanel.AlignLeftWith="LoignButton" RelativePanel.AlignRightWith="LoignButton">
+					<TextBlock Name="ErrorBlock" Text=""></TextBlock>
+				</Border>
+			</RelativePanel>
+		</StackPanel>
+
+	</Grid>
+</Page>

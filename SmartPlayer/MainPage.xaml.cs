@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -28,6 +29,8 @@ namespace SmartPlayer
 			ErrorMessage
 		}
 
+		private readonly double _songDurationPart = 30;
+
 		private DispatcherTimer _dispatcherTimer;
 		private double _duractionSong;
 		private DateTimeOffset _lastTime;
@@ -35,8 +38,8 @@ namespace SmartPlayer
 		private DispatcherTimer _timerSlider;
 		private int actualSecond;
 		private double halfDuractionSong;
-		private readonly double _songDurationPart = 30;
 		private bool isUpdated;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -45,20 +48,20 @@ namespace SmartPlayer
 			ListViewSongs.Tapped += mediaPlayer_ItemClick;
 			SongName.Text = "";
 			isUpdated = false;
-			MusicPlayer.ActualUser = new User {Login = "AdrianXIX", Name = "Adek"};
+			StatusText.Text = "Witaj " + MusicPlayer.ActualUser.GetName();
+			MusicPlayer.IsSongPlaying = false;
+			MusicPlayer.IsStopped = false;
 		}
 
-		public async void test(object sender, object e)
+		public async void Test(object sender, object e)
 		{
-			Debug.WriteLine(string.Format("T: {0} >= {1}",actualSecond, halfDuractionSong));
-			if (actualSecond >= halfDuractionSong && !isUpdated)
+			Debug.WriteLine("T: {0} >= {1}", actualSecond, halfDuractionSong);
+			if ((actualSecond >= halfDuractionSong) && !isUpdated)
 			{
 				isUpdated = true;
-				bool isExist = await RelationUpdater.IsRelationExist();
+				var isExist = await RelationUpdater.IsRelationExist();
 				if (!isExist)
-				{
 					await RelationUpdater.AddUserSongRelation();
-				}
 				await RelationUpdater.UpdateSongQty();
 				NotifyUser("Piosenka przesluchana!", NotifyType.StatusMessage);
 			}
@@ -98,9 +101,7 @@ namespace SmartPlayer
 			SetDurationSong();
 			TimelineSlider.Value = 0;
 			TimelineSlider.Maximum = _duractionSong;
-
 			MediaPlayer.Volume = VolumeSlider.Value;
-			MediaPlayer.Play();
 			StartCountTimeSong();
 		}
 
@@ -120,12 +121,15 @@ namespace SmartPlayer
 				_dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 1);
 				_dispatcherTimer.Tick += SetCurrentSongTime;
 				_dispatcherTimer.Tick += ChangeSlidePosition;
+				_dispatcherTimer.Tick += Test;
 
 				_startTime = DateTimeOffset.Now;
 				_lastTime = _startTime;
-				_dispatcherTimer.Tick += test;
 				_dispatcherTimer.Start();
 			}
+
+			if(!_dispatcherTimer.IsEnabled)
+				_dispatcherTimer.Start();
 		}
 
 		private void ChangeSlidePosition(object sender, object e)
@@ -160,44 +164,28 @@ namespace SmartPlayer
 
 		private void mediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
 		{
+			StartSongAgain();
+		}
+
+		private void StartSongAgain()
+		{
 			Time.Text = "00:00:00";
 			TimelineSlider.Value = 0;
 			SetDurationSong();
 			MediaPlayer.Play();
 		}
 
-		private async void mediaPlayer_ItemClick(object sender, RoutedEventArgs e)
+		private void mediaPlayer_ItemClick(object sender, RoutedEventArgs e)
 		{
-			try
+			var selectedSong = ListViewSongs.SelectedItem as Song;
+			if (selectedSong == null)
 			{
-				var selectedSong = ListViewSongs.SelectedItem as Song;
-				MusicPlayer.ActualSong = selectedSong;
-				MediaPlayer.SetSource(await selectedSong.File.OpenAsync(FileAccessMode.Read), selectedSong.File.ContentType);
-				SongName.Text = selectedSong.GetFullName();
-
-				var isSongExist = await Service.IsSongExist(selectedSong.Title, selectedSong.Album, selectedSong.Artist);
-
-				if (isSongExist)
-					NotifyUser(selectedSong.Title + " - istnieje.", NotifyType.StatusMessage);
-				else
-				{
-					NotifyUser("Piosenka zostanie dodana do bazy...", NotifyType.ErrorMessage);
-					var adder = new SongAdder(selectedSong);
-					try
-					{
-						adder.AddSong();
-						NotifyUser(selectedSong.Title + " - dodano do bazy.", NotifyType.StatusMessage);
-						
-					}
-					catch (Exception exc)
-					{
-						NotifyUser("Coś poszło nie tak...", NotifyType.ErrorMessage);
-					}
-				}
+				ListViewSongs.SelectedItem = null;
+				return;
 			}
-			catch (Exception exc)
-			{
-			}
+
+			SetPlayerSource(selectedSong);
+			CheckSongInDataBase(selectedSong);
 		}
 
 		public void NotifyUser(string strMessage, NotifyType type)
@@ -214,12 +202,7 @@ namespace SmartPlayer
 			StatusText.Text = strMessage;
 		}
 
-		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			Debug.WriteLine(MainLayout.ActualHeight);
-		}
-
-		private void StatisticButton_Click(object sender, RoutedEventArgs e)
+		private async void StatisticButton_Click(object sender, RoutedEventArgs e)
 		{
 			var isPlayerActiv = PlayerPanel.Visibility == Visibility.Visible;
 
@@ -227,12 +210,142 @@ namespace SmartPlayer
 			{
 				PlayerPanel.Visibility = Visibility.Collapsed;
 				StatisticPanel.Visibility = Visibility.Visible;
+				await MusicPlayer.ConvertServiceSong();
+				StatisticListSong.ItemsSource = MusicPlayer.StatisticCollectionSongs;
 			}
 			else
 			{
 				PlayerPanel.Visibility = Visibility.Visible;
 				StatisticPanel.Visibility = Visibility.Collapsed;
 			}
+		}
+
+		private void ChangePlayingState(object sender, RoutedEventArgs e)
+		{
+			ChangePlayingState();
+		}
+
+		private void ChangePlayingState()
+		{
+			if (MusicPlayer.IsSongPlaying)
+				PlaySong();
+			else
+				PauseSong();
+
+			MusicPlayer.IsSongPlaying = !MusicPlayer.IsSongPlaying;
+		}
+
+		private void PauseSong()
+		{
+			MediaPlayer.Pause();
+			PlayPauseButton.Content = "|>";
+			_dispatcherTimer.Stop();
+		}
+
+		private void PlaySong()
+		{
+			MediaPlayer.Play();
+			PlayPauseButton.Content = "||";
+			if (!MusicPlayer.IsStopped)
+				_dispatcherTimer.Start();
+			else
+			{
+				StartSongAgain();
+				StartCountTimeSong();
+				_dispatcherTimer.Start();
+				MusicPlayer.IsStopped = false;
+			}
+		}
+
+		private void NextSong(object sender, RoutedEventArgs e)
+		{
+			var sign = SetDirectionOfChange(sender);
+
+			if (ListViewSongs.Items.Count != 0)
+			{
+				var numberOfSong = ListViewSongs.Items.Count - 1;
+				if (numberOfSong == 0)
+					return;
+			
+				var currentSongPosition = ListViewSongs.SelectedIndex;
+				Song nextSong;
+				if (currentSongPosition < numberOfSong)
+				{
+					currentSongPosition += sign;
+					if (currentSongPosition < 0)
+						currentSongPosition = numberOfSong;
+					nextSong = GetNextSong(currentSongPosition);
+				}
+				else
+				{
+					if(sign == 1)
+						currentSongPosition = 0;
+					else
+						currentSongPosition += sign;
+					nextSong = GetNextSong(currentSongPosition);
+				}
+
+				SetPlayerSource(nextSong);
+				MusicPlayer.IsStopped = false;
+			}
+		}
+
+		private async void SetPlayerSource(Song song)
+		{
+			MusicPlayer.ActualSong = song;
+			MediaPlayer.SetSource(await song.File.OpenAsync(FileAccessMode.Read), song.File.ContentType);
+			SongName.Text = song.GetFullName();
+			CheckSongInDataBase(song);
+		}
+
+		private async void CheckSongInDataBase(Song song)
+		{
+			var isSongExist = await Service.IsSongExist(song.Title, song.Album, song.Artist);
+
+			if (isSongExist)
+				NotifyUser(song.Title + " - istnieje.", NotifyType.StatusMessage);
+			else
+			{
+				NotifyUser("Piosenka zostanie dodana do bazy...", NotifyType.ErrorMessage);
+				var adder = new SongAdder(song);
+				try
+				{
+					adder.AddSong();
+					NotifyUser(song.Title + " - dodano do bazy.", NotifyType.StatusMessage);
+				}
+				catch (Exception exc)
+				{
+					NotifyUser("Coś poszło nie tak...", NotifyType.ErrorMessage);
+				}
+			}
+		}
+
+		private Song GetNextSong(int position)
+		{
+			ListViewSongs.SelectedIndex = position;
+			return ListViewSongs.Items.ElementAt(position) as Song;
+		}
+
+		private int SetDirectionOfChange(object sender)
+		{
+			var buttonName = sender as Button;
+			return buttonName != null && buttonName.Name == "NextButton" ? 1 : -1;
+		}
+
+		private void StopSong(object sender, RoutedEventArgs e)
+		{
+			if (MusicPlayer.IsStopped)
+				return;
+
+			ChangePlayingState();
+			MediaPlayer.Stop();
+			MusicPlayer.IsStopped = true;
+		}
+
+		private void Mute(object sender, RoutedEventArgs e)
+		{
+			VolumeSlider.Value = 0;
+			MediaPlayer.Volume = 0;
 		}
 	}
 }
