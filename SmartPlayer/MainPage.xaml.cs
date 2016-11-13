@@ -241,7 +241,7 @@ namespace SmartPlayer
 		private void PauseSong()
 		{
 			MediaPlayer.Pause();
-			PlayPauseButton.Content = "|>";
+			PlayPauseButton.Content = "►";
 			_dispatcherTimer.Stop();
 			MusicPlayer.IsSongPlaying = !MusicPlayer.IsSongPlaying;
 		}
@@ -356,11 +356,7 @@ namespace SmartPlayer
 
 		private void LogoutUser(object sender, RoutedEventArgs e)
 		{
-			if (_dispatcherTimer != null)
-			{
-				_dispatcherTimer.Stop();
-				_dispatcherTimer = null;
-			}
+			DispatcherClear();
 			MusicPlayer.ActualUser = null;
 			Window.Current.Content = new LoginPage();
 		}
@@ -368,6 +364,26 @@ namespace SmartPlayer
 		private void SetScrollViewer()
 		{
 			ListViewSongs.ScrollIntoView(MusicPlayer.ActualSong);
+		}
+
+		private void ClearButton_OnClick(object sender, RoutedEventArgs e)
+		{
+			DispatcherClear();
+			MediaPlayer.Stop();
+			MusicPlayer.IsStopped = false;
+			MusicPlayer.IsSongPlaying = false;
+			MusicPlayer.ActualSong = null;
+			PlayPauseButton.Content = "||";
+			ListViewSongs.ItemsSource = null;
+			MusicPlayer.Songs.Clear();
+		}
+
+		private void DispatcherClear()
+		{
+			if (_dispatcherTimer != null) {
+				_dispatcherTimer.Stop();
+				_dispatcherTimer = null;
+			}
 		}
 	}
 }

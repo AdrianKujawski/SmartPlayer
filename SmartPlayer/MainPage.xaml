@@ -40,9 +40,9 @@
 							<ColumnDefinition />
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
-						<Button x:Name="StopButton" Content="[]" Margin="10" Click="StopSong" HorizontalAlignment="Center" />
+						<Button x:Name="StopButton" Content="■" Margin="10" Click="StopSong" HorizontalAlignment="Center" />
 						<Button x:Name="PreviousButton" Content="&#60;" Margin="10" Grid.Column="1" Click="NextSong" HorizontalAlignment="Center"/>
-						<Button x:Name="PlayPauseButton" Content="|>" Margin="10" Grid.Column="2" Click="ChangePlayingState" HorizontalAlignment="Center"/>
+						<Button x:Name="PlayPauseButton" Content="►" Margin="10" Grid.Column="2" Click="ChangePlayingState" HorizontalAlignment="Center"/>
 						<Button x:Name="NextButton" Content=">" Margin="10" Grid.Column="3" Click="NextSong" HorizontalAlignment="Center" />
 						<Button x:Name="MuteButton" Content="M" Margin="10" Grid.Column="4" Click="Mute" HorizontalAlignment="Center"/>
 					</Grid>
@@ -52,10 +52,12 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
 						<ColumnDefinition />
+						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Button x:Name="Button" Margin="10" Content="Otwórz" Click="OpenFiles" HorizontalAlignment="Stretch" />
+					<Button x:Name="ClearButton" Margin="10" Content="Wyczyść" Grid.Column="1" Click="ClearButton_OnClick" HorizontalAlignment="Stretch"/>
 					<Button x:Name="StatisticButton" Margin="10" Content="Statystyki" Click="StatisticButton_Click"
-					        HorizontalAlignment="Stretch" Grid.Column="1" />
+					        HorizontalAlignment="Stretch" Grid.Column="2" />
 				</Grid>
 			</StackPanel>
 
@@ -65,8 +67,9 @@
 					<DataTemplate>
 						<Grid Height="40">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
 								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="50"/>
 							</Grid.ColumnDefinitions>
 
 							<Border Background="DarkGray" Width="30" Height="30">
@@ -89,8 +92,8 @@
 						<ColumnDefinition/>
 						<ColumnDefinition Width="100"/>
 					</Grid.ColumnDefinitions>
-					<TextBlock x:Name="StatusText" Text="Witaj!" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="10" />
-					<Button x:Name="LogOutButton" Content="Wyloguj" Grid.Column="1" HorizontalAlignment="Stretch" Click="LogoutUser" Padding="10"></Button>
+					<TextBlock x:Name="StatusText" Text="Witaj!" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" />
+					<Button x:Name="LogOutButton" Content="Wyloguj" Grid.Column="1" HorizontalAlignment="Stretch" Click="LogoutUser" Margin="5"></Button>
 				</Grid>
 				
 			</Border>
