@@ -22,6 +22,10 @@ namespace SmartPlayer.Controller
 		public static Song ActualSong { get; set; }
 		public static bool IsSongPlaying{ get; set; }
 		public static bool IsStopped{ get; set; }
+		public static bool IsMute { get; set; }
+
+		public static double TempVolumeSlider { get; set; }
+		public static double TempVolumeValue { get; set; }
 
 		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
 		{

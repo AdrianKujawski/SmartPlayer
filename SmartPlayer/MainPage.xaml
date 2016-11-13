@@ -18,7 +18,7 @@
 				<RowDefinition Height="100" />
 			</Grid.RowDefinitions>
 
-			<MediaElement x:Name="MediaPlayer" MediaOpened="mediaPlayer_MediaOpened" MediaEnded="mediaPlayer_MediaEnded" />
+			<MediaElement x:Name="MediaPlayer" MediaOpened="mediaPlayer_MediaOpened" MediaEnded="mediaPlayer_MediaEnded" AutoPlay="False" AudioCategory="BackgroundCapableMedia" />
 
 			<StackPanel x:Name="ActionPanel">
 				<TextBlock x:Name="SongName" Margin="10" Text="Song name" FontSize="22" />
@@ -28,20 +28,24 @@
 				        IsThumbToolTipEnabled="False" ValueChanged="ChangeMediaVolume" />
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="100" />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition Width="100" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition MinWidth="400" MaxWidth="800" Width="*"/>
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-
-					<Button x:Name="StopButton" Content="[]" Margin="10" Grid.Column="1" Click="StopSong" />
-					<Button x:Name="PreviousButton" Content="&#60;" Margin="10" Grid.Column="2" Click="NextSong"/>
-					<Button x:Name="PlayPauseButton" Content="||" Margin="10" Grid.Column="3" Click="ChangePlayingState"/>
-					<Button x:Name="NextButton" Content=">" Margin="10" Grid.Column="4" Click="NextSong" />
-					<Button x:Name="MuteButton" Content="M" Margin="10" Grid.Column="5" Click="Mute"/>
+					<Grid Column="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Button x:Name="StopButton" Content="[]" Margin="10" Click="StopSong" HorizontalAlignment="Center" />
+						<Button x:Name="PreviousButton" Content="&#60;" Margin="10" Grid.Column="1" Click="NextSong" HorizontalAlignment="Center"/>
+						<Button x:Name="PlayPauseButton" Content="|>" Margin="10" Grid.Column="2" Click="ChangePlayingState" HorizontalAlignment="Center"/>
+						<Button x:Name="NextButton" Content=">" Margin="10" Grid.Column="3" Click="NextSong" HorizontalAlignment="Center" />
+						<Button x:Name="MuteButton" Content="M" Margin="10" Grid.Column="4" Click="Mute" HorizontalAlignment="Center"/>
+					</Grid>
 				</Grid>
 
 				<Grid>
@@ -49,7 +53,7 @@
 						<ColumnDefinition />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
-					<Button x:Name="Button" Margin="10" Content="Open" Click="button_Click" HorizontalAlignment="Stretch" />
+					<Button x:Name="Button" Margin="10" Content="Otwórz" Click="OpenFiles" HorizontalAlignment="Stretch" />
 					<Button x:Name="StatisticButton" Margin="10" Content="Statystyki" Click="StatisticButton_Click"
 					        HorizontalAlignment="Stretch" Grid.Column="1" />
 				</Grid>
@@ -80,7 +84,15 @@
 
 			<Border x:Name="StatusBorder" MaxHeight="50"
 			        Grid.Row="2" Background="Green">
-				<TextBlock x:Name="StatusText" Text="Witaj!" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="10" />
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition Width="100"/>
+					</Grid.ColumnDefinitions>
+					<TextBlock x:Name="StatusText" Text="Witaj!" VerticalAlignment="Top" HorizontalAlignment="Stretch" Padding="10" />
+					<Button x:Name="LogOutButton" Content="Wyloguj" Grid.Column="1" HorizontalAlignment="Stretch" Click="LogoutUser" Padding="10"></Button>
+				</Grid>
+				
 			</Border>
 
 		</Grid>
