@@ -21,7 +21,7 @@
 					<TextBox Name="PasswordBox" Margin="5" Grid.Column="1" />
 				</Grid>
 				<Button Name="LoignButton" Margin="5" Content="OK" HorizontalAlignment="Stretch" RelativePanel.Below="Grid" RelativePanel.AlignLeftWith="Grid" RelativePanel.AlignRightWith="Grid" Click="SignIn"/>
-				<Border Visibility="Collapsed" Name="InfoPanel" Margin="5" Background="Red" MaxHeight="50" HorizontalAlignment="Stretch" RelativePanel.Below="LoignButton" RelativePanel.AlignLeftWith="LoignButton" RelativePanel.AlignRightWith="LoignButton">
+				<Border Visibility="Collapsed" Name="InfoPanel" Margin="5" Background="Red" MinHeight="50" HorizontalAlignment="Stretch" RelativePanel.Below="LoignButton" RelativePanel.AlignLeftWith="LoignButton" RelativePanel.AlignRightWith="LoignButton">
 					<TextBlock Name="ErrorBlock" Text=""></TextBlock>
 				</Border>
 			</RelativePanel>

@@ -18,7 +18,7 @@
 				<RowDefinition Height="100" />
 			</Grid.RowDefinitions>
 
-			<MediaElement x:Name="MediaPlayer" MediaOpened="mediaPlayer_MediaOpened" MediaEnded="mediaPlayer_MediaEnded" AutoPlay="False" AudioCategory="BackgroundCapableMedia" />
+			<MediaElement x:Name="MediaPlayer" MediaOpened="songOpened" MediaEnded="songEnded" AutoPlay="False" AudioCategory="BackgroundCapableMedia" />
 
 			<StackPanel x:Name="ActionPanel">
 				<TextBlock x:Name="SongName" Margin="10" Text="Song name" FontSize="22" />

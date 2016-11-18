@@ -1,67 +1,50 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
+﻿// -----------------------------------------------------------------------
+// <copyright file="SongAdder.cs" company="Unicore">
+//     Copyright (c) 2016, Unicore. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
 using System.Threading.Tasks;
 using SmartPlayer.Model;
 
-namespace SmartPlayer.Controller
-{
-	internal class SongAdder
-	{
-		private readonly Song _song;
+namespace SmartPlayer.Controller {
 
-		public SongAdder(Song song)
-		{
+	class SongAdder {
+		readonly SongFile _song;
+
+		public SongAdder(SongFile song) {
 			_song = song;
 		}
 
-		private event deleg _thingsToDo;
-
-		public async void AddSong()
-		{
+		public async void AddSong() {
 			var result = await Service.GetArtistId(_song.Artist);
 
 			if (result == null)
-				_thingsToDo += InsertArtist;
+				await InsertArtist();
 
 			result = await Service.GetAlbumId(_song.Album);
 			if (result == null)
-				_thingsToDo += InsertAlbum;
+				await InsertAlbum();
 
 			result = await Service.GetTitleId(_song.Title);
 			if (result == null)
-				_thingsToDo += InsertTitle;
-
-			_thingsToDo.Invoke();
+				await InsertTitle();
 		}
 
-
-		private async void InsertAlbum()
-		{
-			int? artistId;
-			do
-			{
-				artistId = await Service.GetArtistId(_song.Artist);
-			} while (artistId == null);
-			await Service.InsertAlbum(_song.Album, artistId);
-		}
-
-		private async void InsertTitle()
-		{
-			int? albumId;
-			do
-			{
-				albumId = await Service.GetAlbumId(_song.Album);
-			} while (albumId == null);
-
-			await Service.InsertTitle(_song.Title, albumId);
-		}
-
-		private async void InsertArtist()
-		{
+		async Task InsertArtist() {
 			await Service.InsertArtist(_song.Artist);
 		}
 
-		private delegate void deleg();
+		async Task InsertAlbum() {
+			var artistId = await Service.GetArtistId(_song.Artist);
+			await Service.InsertAlbum(_song.Album, artistId);
+		}
+
+		async Task InsertTitle() {
+			var albumId = await Service.GetAlbumId(_song.Album);
+			await Service.InsertTitle(_song.Title, albumId);
+		}
 	}
+
 }
+ 

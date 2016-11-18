@@ -32,7 +32,7 @@ namespace SmartPlayer.Controller {
 
 		private static async Task SetSongQty()
 		{
-			_songQty = await Service.GetUserSongQty(_userId, _titleId);
+			_songQty = await Service.GetUserSongQty(_userId, _titleId) ?? 0;
 		}
 
 		public static async Task UpdateSongQty()

@@ -23,9 +23,9 @@ namespace SmartPlayer.Model {
 			if (user == null)
 				return false;
 
-			if (user.Login == _login && user.Password == _password)
+			if (user.login == _login && user.password == _password)
 			{
-				_name = user.Name;
+				_name = user.name;
 				return true;
 			}
 			return false;

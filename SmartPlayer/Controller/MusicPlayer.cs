@@ -1,48 +1,45 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="MusicPlayer.cs" company="Unicore">
+//     Copyright (c) 2016, Unicore. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Windows.Storage;
-using SmartPlayer.Model;
+using Windows.Storage.FileProperties;
 using Windows.UI.Xaml.Media.Imaging;
+using SmartPlayer.Model;
 using SmartPlayer.PlayerService;
-using User = SmartPlayer.Model.User;
 
-namespace SmartPlayer.Controller
-{
-	internal class MusicPlayer
-	{
-		public static ObservableCollection<Song> Songs { set; get; }
-		public static ObservableCollection<ServiceSong> StatisticCollectionSongs { get; set; }
-		private static Song _song;
+namespace SmartPlayer.Controller {
+
+	static class MusicPlayer {
+		public static ObservableCollection<SongFile> Songs { set; get; }
+		public static ObservableCollection<Song> StatisticCollectionSongs { get; set; }
 
 		public static User ActualUser { get; set; }
-		public static Song ActualSong { get; set; }
-		public static bool IsSongPlaying{ get; set; }
-		public static bool IsStopped{ get; set; }
+		public static SongFile ActualSong { get; set; }
 		public static bool IsMute { get; set; }
 
 		public static double TempVolumeSlider { get; set; }
 		public static double TempVolumeValue { get; set; }
 
-		public static void AddSongToPlaylist(IEnumerable<StorageFile> files)
-		{
+		public static void AddSongToPlaylist(IEnumerable<StorageFile> files) {
 			CreateSong(files);
 		}
 
-
-		private static async void CreateSong(IEnumerable<StorageFile> files)
-		{
-			foreach (var file in files)
-			{
-				var newSong = new Song();
+		static async void CreateSong(IEnumerable<StorageFile> files) {
+			foreach (var file in files) {
+				var newSong = new SongFile();
 				var properties = await file.Properties.GetMusicPropertiesAsync();
 				var artist = properties.Artist;
 				var title = properties.Title;
 				var album = properties.Album;
-				var img = await file.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.ListView);
+				var img = await file.GetThumbnailAsync(ThumbnailMode.ListView);
 
 				var isArtist = string.IsNullOrWhiteSpace(artist);
 				var isTitle = string.IsNullOrWhiteSpace(title);
@@ -50,7 +47,7 @@ namespace SmartPlayer.Controller
 
 				newSong.File = file;
 
-				BitmapImage lol = new BitmapImage();
+				var lol = new BitmapImage();
 				lol.SetSource(img);
 				newSong.AlbumImage = lol;
 
@@ -59,41 +56,33 @@ namespace SmartPlayer.Controller
 
 				if (!isArtist)
 					newSong.Artist = artist;
-						
-				if (!isTitle)
-					newSong.Title = title;
-				else 
-					newSong.Title = file.DisplayName;
+
+				newSong.Title = !isTitle ? title : file.DisplayName;
 
 				Songs.Add(newSong);
 			}
 		}
 
-		public static async Task ConvertServiceSong()
-		{
-			if(StatisticCollectionSongs == null)
-				StatisticCollectionSongs = new ObservableCollection<ServiceSong>();
+		public static async Task AddSongsToStatisticView() {
+			if (StatisticCollectionSongs == null)
+				StatisticCollectionSongs = new ObservableCollection<Song>();
 
 			StatisticCollectionSongs.Clear();
 			var songs = await Service.GetSongsAndQty(ActualUser.GetLogin());
 
-			if (songs == null)
+			if (!songs.Any())
 				return;
 
-			var lenght = songs.Length;
-			for (int i = 0; i < lenght; i++)
-			{
-				var song = songs[i];
+			foreach (var song in songs) {
 				StatisticCollectionSongs.Add(song);
 			}
-
-			Sort<ServiceSong>(StatisticCollectionSongs);
 		}
 
-		public static void Sort<T>(ObservableCollection<T> collection){
-			List<T> sorted = collection.OrderBy(x => x).ToList();
-			for (int i = 0; i < sorted.Count(); i++)
+		public static void Sort<T>(ObservableCollection<T> collection) {
+			var sorted = collection.OrderBy(x => x).ToList();
+			for (var i = 0; i < sorted.Count(); i++)
 				collection.Move(collection.IndexOf(sorted[i]), i);
 		}
 	}
+
 }
