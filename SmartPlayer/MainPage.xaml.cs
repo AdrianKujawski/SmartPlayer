@@ -17,7 +17,10 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using SmartPlayer.Controller;
+using SmartPlayer.Lists;
 using SmartPlayer.Model;
+using SmartPlayer.Relation;
+using SmartPlayer.Song;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace SmartPlayer {
@@ -31,47 +34,39 @@ namespace SmartPlayer {
 			ErrorMessage
 		}
 
+		TimeTask _timeTask;
 
 		readonly double _songDurationPart = 30;
-		DispatcherTimer _dispatcherTimer;
-		double _duractionSong;
-		DateTimeOffset _lastTime;
-		DateTimeOffset _startTime;
-		DispatcherTimer _timerSlider;
-		int actualSecond;
-		double halfDuractionSong;
-		bool isUpdated;
+		double _halfDuractionSong;
+		bool _isUpdated;
 		ScrollViewer scollViewer;
 
 		public MainPage() {
+			this.scollViewer = scollViewer;
 			InitializeComponent();
 			VolumeSlider.Value = 100;
-			ListViewCreate();
 			ListViewSongs.Tapped += mediaPlayer_ItemClick;
 			SongName.Text = "";
-			isUpdated = false;
+			_isUpdated = false;
 			StatusText.Text = "Witaj " + MusicPlayer.ActualUser.GetName();
+			SetTimeTask();
 		}
 
-		void ListViewCreate() {
-			MusicPlayer.Songs = new ObservableCollection<SongFile>();
-			ListViewSongs.ItemsSource = MusicPlayer.Songs;
-		}
 
 		async void OpenFiles(object sender, RoutedEventArgs e) {
 			var fileOpener = new FileOpener();
 			var files = await fileOpener.Open();
 
 			if (files != null) {
-				MusicPlayer.AddSongToPlaylist(files);
-				ListViewSongs.ItemsSource = MusicPlayer.Songs;
+				Playlist.AddSongToPlaylist(files);
+				ListViewSongs.ItemsSource = Playlist.GetListOfSongs();
 			}
 		}
 
 		void songOpened(object sender, RoutedEventArgs e) {
 			SetDurationSong();
 			TimelineSlider.Value = 0;
-			TimelineSlider.Maximum = _duractionSong;
+			TimelineSlider.Maximum = SongTime.DuractionSong;
 			MediaPlayer.Volume = VolumeSlider.Value;
 
 			if (MediaPlayer.CurrentState == MediaElementState.Paused || MediaPlayer.CurrentState == MediaElementState.Stopped)
@@ -91,38 +86,32 @@ namespace SmartPlayer {
 		}
 
 		void SetDurationSong() {
-			isUpdated = false;
-			actualSecond = 0;
-			_duractionSong = (int)MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-			halfDuractionSong = Math.Floor(_duractionSong / _songDurationPart);
+			_isUpdated = false;
+			SongTime.ActualSecond = 0;
+			SongTime.DuractionSong = (int)MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+			SongTime.TimeToExamine = Math.Floor(SongTime.DuractionSong / _songDurationPart);
 		}
 
-		void StartCountTimeSong() {
-			if (_dispatcherTimer == null) {
-				_dispatcherTimer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 1) };
-				DispatcherSetMethods(_dispatcherTimer);
-				_startTime = DateTimeOffset.Now;
-				_lastTime = _startTime;
-				_dispatcherTimer.Start();
-			}
+		void SetTimeTask() {
+			_timeTask = new TimeTask();
+			_timeTask.AddMethod(SetCurrentSongTime);
+			_timeTask.AddMethod(ChangeSlidePosition);
+			_timeTask.AddMethod(WaitForListningSong);
 		}
 
-		void DispatcherSetMethods(DispatcherTimer dispatcher) {
-			dispatcher.Tick += SetCurrentSongTime;
-			dispatcher.Tick += ChangeSlidePosition;
-			dispatcher.Tick += WaitForListningSong;
-		}
 		async void WaitForListningSong(object sender, object e) {
-			Debug.WriteLine("T: {0} >= {1}", actualSecond, halfDuractionSong);
-			if ((actualSecond >= halfDuractionSong) && !isUpdated) {
-				isUpdated = true;
+#if DEBUG
+			Debug.WriteLine("T: {0} >= {1}", SongTime.ActualSecond, SongTime.TimeToExamine);
+#endif
+			if ((SongTime.ActualSecond >= SongTime.TimeToExamine) && !_isUpdated) {
+				_isUpdated = true;
 				var isExist = await RelationUpdater.IsRelationExist();
 				if (!isExist)
-					await RelationUpdater.AddUserSongRelation();
+					await CreateRelation.AddUserSongRelation();
 				await RelationUpdater.UpdateSongQty();
 				NotifyUser("Piosenka przesluchana!", NotifyType.StatusMessage);
 			}
-			actualSecond++;
+			SongTime.ActualSecond++;
 		}
 
 		void ChangeSlidePosition(object sender, object e) {
@@ -174,7 +163,7 @@ namespace SmartPlayer {
 				NotifyUser(song.Title + " - istnieje.", NotifyType.StatusMessage);
 			else {
 				NotifyUser("Piosenka zostanie dodana do bazy...", NotifyType.ErrorMessage);
-				var adder = new SongAdder(song);
+				var adder = new SongInsert(song);
 				try {
 					adder.AddSong();
 					NotifyUser(song.Title + " - dodano do bazy.", NotifyType.StatusMessage);
@@ -213,20 +202,18 @@ namespace SmartPlayer {
 		void PauseSong() {
 			MediaPlayer.Pause();
 			PlayPauseButton.Content = "►";
-			_dispatcherTimer.Stop();
+			_timeTask.Stop();
 		}
 
 		void PlaySong() {
 			PlayPauseButton.Content = "||";
 			if (MediaPlayer.CurrentState != MediaElementState.Stopped) {
 				MediaPlayer.Play();
-				StartCountTimeSong();
-				_dispatcherTimer.Start();
+				_timeTask.Start();
 			}
 			else {
 				StartSongAgain();
-				StartCountTimeSong();
-				_dispatcherTimer.Start();
+				_timeTask.Start();
 			}
 		}
 
@@ -302,8 +289,8 @@ namespace SmartPlayer {
 			if (isPlayerActiv) {
 				PlayerPanel.Visibility = Visibility.Collapsed;
 				StatisticPanel.Visibility = Visibility.Visible;
-				await MusicPlayer.AddSongsToStatisticView();
-				StatisticListSong.ItemsSource = MusicPlayer.StatisticCollectionSongs;
+				await StatisticList.AddSongsToStatisticView();
+				StatisticListSong.ItemsSource = StatisticList.GetList();
 			}
 			else {
 				PlayerPanel.Visibility = Visibility.Visible;
@@ -322,18 +309,18 @@ namespace SmartPlayer {
 		}
 
 		void ClearButton_OnClick(object sender, RoutedEventArgs e) {
-			DispatcherClear();
+			_timeTask.Stop();
 			MediaPlayer.Stop();
 			MusicPlayer.ActualSong = null;
 			PlayPauseButton.Content = "||";
 			ListViewSongs.ItemsSource = null;
-			MusicPlayer.Songs.Clear();
+			Playlist.ClearList();
 		}
 
 		void DispatcherClear() {
-			if (_dispatcherTimer != null) {
-				_dispatcherTimer.Stop();
-				_dispatcherTimer = null;
+			if (_timeTask != null) {
+				_timeTask.Stop();
+				_timeTask = null;
 			}
 		}
 	}

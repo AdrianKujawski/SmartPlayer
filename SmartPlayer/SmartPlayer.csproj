@@ -98,20 +98,27 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controller\RelationUpdater.cs" />
+    <Compile Include="Lists\Playlist.cs" />
+    <Compile Include="Lists\StatisticList.cs" />
+    <Compile Include="Song\SongCreator.cs" />
+    <Compile Include="Song\SongTime.cs" />
+    <Compile Include="Controller\TimeTask.cs" />
+    <Compile Include="Relation\CreateRelation.cs" />
+    <Compile Include="Relation\RelationUpdater.cs" />
     <Compile Include="Controller\Service.cs" />
     <Compile Include="Controller\MusicPlayer.cs" />
-    <Compile Include="Controller\SongAdder.cs" />
+    <Compile Include="Song\SongInsert.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\FileOpener.cs" />
+    <Compile Include="Controller\FileOpener.cs" />
     <Compile Include="Model\SongFile.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relation\Relation.cs" />
     <Compile Include="Service References\PlayerService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

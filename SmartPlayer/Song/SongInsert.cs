@@ -5,14 +5,15 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
+using SmartPlayer.Controller;
 using SmartPlayer.Model;
 
-namespace SmartPlayer.Controller {
+namespace SmartPlayer.Song {
 
-	class SongAdder {
+	class SongInsert {
 		readonly SongFile _song;
 
-		public SongAdder(SongFile song) {
+		public SongInsert(SongFile song) {
 			_song = song;
 		}
 

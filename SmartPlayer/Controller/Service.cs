@@ -84,7 +84,7 @@ namespace SmartPlayer.Controller {
 			return await _soapClient.UpdateUserSongQtyAsync(userSongId, qty);
 		}
 
-		public static async Task<Song[]> GetSongsAndQty(string userLogin) {
+		public static async Task<PlayerService.Song[]> GetSongsAndQty(string userLogin) {
 			_soapClient = new MpServiceSoapClient();
 			var result = await _soapClient.GetSongsAndQtyAsync(userLogin);
 			return result.Body.GetSongsAndQtyResult;

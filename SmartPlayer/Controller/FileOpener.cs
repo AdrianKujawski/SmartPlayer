@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace SmartPlayer.Model {
+namespace SmartPlayer.Controller {
 	class FileOpener {
 		FileOpenPicker openPicker;
 
