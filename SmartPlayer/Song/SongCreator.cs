@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="SongCreator.cs" company="Adrian Kujawski">
+// <copyright file="SongCreator.cs">
 //     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,7 +13,7 @@ using SmartPlayer.Model;
 
 namespace SmartPlayer.Song {
 
-	class SongCreator {
+	static class SongCreator {
 		static SongFile _newSong;
 		static MusicProperties _properties;
 		static string _artist;
@@ -30,7 +30,7 @@ namespace SmartPlayer.Song {
 			return _newSong;
 		}
 
-		static async Task GetProperties(StorageFile file) {
+		static async Task GetProperties(IStorageItemProperties file) {
 			_properties = await file.Properties.GetMusicPropertiesAsync();
 			_artist = _properties.Artist;
 			_title = _properties.Title;
@@ -44,9 +44,10 @@ namespace SmartPlayer.Song {
 		}
 
 		static async Task CreateSong(StorageFile file) {
-			_newSong = new SongFile();
-			_newSong.File = file;
-			_newSong.AlbumImage = await GetBitmapImage(file);
+			_newSong = new SongFile {
+				File = file,
+				AlbumImage = await GetBitmapImage(file)
+			};
 
 			if (!_isAlbum)
 				_newSong.Album = _album;

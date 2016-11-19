@@ -98,8 +98,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controller\PlayerController.cs" />
     <Compile Include="Lists\Playlist.cs" />
     <Compile Include="Lists\StatisticList.cs" />
+    <Compile Include="NotifyFolder\Notify.cs" />
+    <Compile Include="NotifyFolder\NotifyType.cs" />
     <Compile Include="Song\SongCreator.cs" />
     <Compile Include="Song\SongTime.cs" />
     <Compile Include="Controller\TimeTask.cs" />
@@ -130,9 +133,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\PlayerService\MPService.wsdl">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Service References\PlayerService\MPService1.wsdl" />
     <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindAlbumIdResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -174,13 +175,13 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <None Include="Service References\PlayerService\MPService1.disco" />
     <None Include="Service References\PlayerService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\PlayerService\configuration.svcinfo" />
     <None Include="Service References\PlayerService\configuration91.svcinfo" />
-    <None Include="Service References\PlayerService\MPService.disco" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

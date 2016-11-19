@@ -1,22 +1,30 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+// <copyright file="FileOpener.cs">
+//     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace SmartPlayer.Controller {
+
 	class FileOpener {
-		FileOpenPicker openPicker;
+		readonly FileOpenPicker _openPicker;
 
 		public FileOpener() {
-			openPicker = new FileOpenPicker();
-			openPicker.FileTypeFilter.Add(".wmv");
-			openPicker.FileTypeFilter.Add(".wma");
-			openPicker.FileTypeFilter.Add(".mp3");
+			_openPicker = new FileOpenPicker { SuggestedStartLocation = PickerLocationId.MusicLibrary };
+			_openPicker.FileTypeFilter.Add(".wmv");
+			_openPicker.FileTypeFilter.Add(".wma");
+			_openPicker.FileTypeFilter.Add(".mp3");
 		}
 
 		public async Task<IReadOnlyCollection<StorageFile>> Open() {
-			return await openPicker.PickMultipleFilesAsync();
+			return await _openPicker.PickMultipleFilesAsync();
 		}
 	}
+
 }

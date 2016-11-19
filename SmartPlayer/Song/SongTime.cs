@@ -6,7 +6,7 @@
 
 namespace SmartPlayer.Song {
 
-	class SongTime {
+	static class SongTime {
 		public static double DuractionSong { get; set; }
 		public static int ActualSecond { get; set; }
 		public static double TimeToExamine { get; set; }

@@ -23,27 +23,32 @@ namespace SmartPlayer {
 			InitializeComponent();
 		}
 
-		public async void SignIn(object sender, RoutedEventArgs e) {
-			InfoPanel.Visibility = Visibility;
+		async void SignIn(object sender, RoutedEventArgs e) {
+			DisableControllers();
 #if DEBUG
 			LoginBox.Text = "AdrianXIX";
-			PasswordBox.Text = "123qwe";
+			PasswordBox.Password = "123qwe";
 #endif
 			if (!CheckTextBox()) {
-				ErrorBlock.Text = "Źle wpisany login lub haslo";
+				InfoPanel.Visibility = Visibility;
+				ErrorBlock.Text = "Źle wpisane dane.";
 				return;
 			}
 
-			var user = new User(LoginBox.Text, PasswordBox.Text);
+			var user = new User(LoginBox.Text, PasswordBox.Password);
 			var isCorrect = await CheckLoginAndPassword(user);
-			if (!isCorrect) return;
+			if (!isCorrect) {
+				InfoPanel.Visibility = Visibility;
+				ErrorBlock.Text = "Nieporawny login lub hasło.";
+				return;
+			}
 
 			MusicPlayer.ActualUser = user;
 			Window.Current.Content = new MainPage();
 		}
 
 		bool CheckTextBox() {
-			return !string.IsNullOrWhiteSpace(LoginBox.Text) && !string.IsNullOrWhiteSpace(PasswordBox.Text);
+			return !string.IsNullOrWhiteSpace(LoginBox.Text) && !string.IsNullOrWhiteSpace(PasswordBox.Password);
 		}
 
 		async Task<bool> CheckLoginAndPassword(User user) {
@@ -52,11 +57,15 @@ namespace SmartPlayer {
 				isCorrect = await user.CheckLoginAndPassword();
 			}
 			catch (Exception exc) {
-				var msg = new MessageDialog(exc.Message + "/n" + exc.InnerException + "/n" + exc.Source);
-				await msg.ShowAsync();
-				ErrorBlock.Text = exc.Message;
+				ErrorBlock.Text = "Nie można połączyć się z serwerem.";
 			}
 			return isCorrect;
+		}
+
+		void DisableControllers() {
+			LoignButton.IsEnabled = false;
+			LoginBox.IsEnabled = false;
+			PasswordBox.IsEnabled = false;
 		}
 	}
 

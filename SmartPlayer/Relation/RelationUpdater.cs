@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="RelationUpdater.cs" company="Adrian Kujawski">
+// <copyright file="RelationUpdater.cs">
 //     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -23,10 +23,7 @@ namespace SmartPlayer.Relation {
 		public static async Task<bool> IsRelationExist() {
 			await SetData();
 			_userSongId = await Service.FindUserSongId(_userId, _titleId);
-			if (_userSongId == null)
-				return false;
-
-			return true;
+			return _userSongId != null;
 		}
 
 		static async Task SetSongQty() {

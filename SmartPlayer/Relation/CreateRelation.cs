@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CreateRelation.cs" company="Adrian Kujawski">
+// <copyright file="CreateRelation.cs">
 //     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

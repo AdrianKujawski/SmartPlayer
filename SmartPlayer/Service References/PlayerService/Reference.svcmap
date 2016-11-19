@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:55573/MPService.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/MPService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MPService.wsdl" MetadataType="Wsdl" ID="0f7f1973-8d5b-416f-a471-b565fdc99139" SourceId="1" SourceUrl="http://localhost:55573/MPService.asmx?wsdl" />
-    <MetadataFile FileName="MPService.disco" MetadataType="Disco" ID="8d0edd43-724d-407c-9dbf-fe82ef375c90" SourceId="1" SourceUrl="http://localhost:55573/MPService.asmx?disco" />
+    <MetadataFile FileName="MPService1.wsdl" MetadataType="Wsdl" ID="ac21d62e-b990-4da0-a38d-b11b0fe8119b" SourceId="1" SourceUrl="http://localhost/MPService.asmx?wsdl" />
+    <MetadataFile FileName="MPService1.disco" MetadataType="Disco" ID="a4a2be0d-8c35-4332-8caa-28a74471b805" SourceId="1" SourceUrl="http://localhost/MPService.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

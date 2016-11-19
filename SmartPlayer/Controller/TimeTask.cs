@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------
+// <copyright file="TimeTask.cs">
+//     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System;
 using Windows.UI.Xaml;
 
 namespace SmartPlayer.Controller {
-	class TimeTask {
-		DispatcherTimer _dispatcher;
 
-		public TimeTask() {
-			_dispatcher = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 1) };
+	static class TimeTask {
+		public static DispatcherTimer DispatcherTimer { get; set; }
+
+		public static void AddMethod(EventHandler<object> method) {
+			DispatcherTimer.Tick += method;
 		}
 
-		public void AddMethod(EventHandler<object> method) {
-			_dispatcher.Tick += method;
+		public static void Start() {
+			DispatcherTimer?.Start();
 		}
 
-		public void Start() {
-			if(_dispatcher != null)
-				_dispatcher.Start();
+		public static void Stop() {
+			DispatcherTimer?.Stop();
 		}
 
-		public void Stop() {
-			if (_dispatcher != null)
-				_dispatcher.Stop();
+		public static void Disable() {
+			DispatcherTimer.Interval = new TimeSpan(0, 0, 0, 1);
 		}
 	}
+
 }

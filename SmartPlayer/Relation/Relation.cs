@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Relation.cs" company="Adrian Kujawski">
+// <copyright file="Relation.cs">
 //     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,16 +9,13 @@ using SmartPlayer.Controller;
 
 namespace SmartPlayer.Relation {
 
-	class Relation {
+	abstract class Relation {
 		protected static int? _titleId;
 		protected static int? _userId;
 
-		protected static async Task<bool> SetData() {
+		protected static async Task SetData() {
 			_titleId = await Service.GetTitleId(MusicPlayer.ActualSong.Title);
 			_userId = await Service.GetUserId(MusicPlayer.ActualUser.GetLogin());
-			;
-
-			return true;
 		}
 	}
 

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Playlist.cs" company="Adrian Kujawski">
+// <copyright file="Playlist.cs">
 //     Copyright (c) 2016, Adrian Kujawski. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -12,7 +12,7 @@ using SmartPlayer.Song;
 
 namespace SmartPlayer.Lists {
 
-	class Playlist {
+	static class Playlist {
 		static readonly ObservableCollection<SongFile> __songs = new ObservableCollection<SongFile>();
 
 		public static async void AddSongToPlaylist(IEnumerable<StorageFile> files) {
@@ -26,7 +26,7 @@ namespace SmartPlayer.Lists {
 			return __songs;
 		}
 
-		public static void ClearList() {
+		public static void Clear() {
 			__songs.Clear();
 		}
 	}

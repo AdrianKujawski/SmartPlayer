@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlayer", "SmartPlayer\SmartPlayer.csproj", "{1EE51388-61A5-4C6D-96BF-0D4AE64F6E30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinService", "..\XamarinService\XamarinService\XamarinService.csproj", "{E1058B65-A470-479A-B9E4-D8ADA1486F70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "..\XamarinService\XamarinService\WebService.csproj", "{E1058B65-A470-479A-B9E4-D8ADA1486F70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
