@@ -87,10 +87,10 @@ namespace SmartPlayer {
 		void SetTimeTask() {
 			TimeTask.AddMethod(SetCurrentSongTime);
 			TimeTask.AddMethod(ChangeSlidePosition);
-			TimeTask.AddMethod(WaitForListningSong);
+			TimeTask.AddMethod(WaitToListenTo);
 		}
 
-		async void WaitForListningSong(object sender, object e) {
+		async void WaitToListenTo(object sender, object e) {
 #if DEBUG
 			Debug.WriteLine("T: {0} >= {1}", SongTime.ActualSecond, SongTime.TimeToExamine);
 #endif
@@ -266,8 +266,7 @@ namespace SmartPlayer {
 			if (isPlayerActiv) {
 				PlayerPanel.Visibility = Visibility.Collapsed;
 				StatisticPanel.Visibility = Visibility.Visible;
-				await StatisticList.AddSongsToStatisticView();
-				StatisticListSong.ItemsSource = StatisticList.GetList();
+				
 			}
 			else {
 				PlayerPanel.Visibility = Visibility.Visible;
@@ -301,15 +300,31 @@ namespace SmartPlayer {
 			TimeTask.Disable();
 		}
 
-		async void ListViewSongs_Drop(object sender, DragEventArgs e) {
+		async void DropSongsToPlaylist(object sender, DragEventArgs e) {
 			var files = await e.DataView.GetStorageItemsAsync();
 			var listOfFiles = files.Cast<StorageFile>().ToList();
 			Playlist.AddSongToPlaylist(listOfFiles);
 			ListViewSongs.ItemsSource = Playlist.GetListOfSongs();
 		}
 
-		void ListViewSongs_DragEnter(object sender, DragEventArgs e) {
+		void SetAcceptedOperation(object sender, DragEventArgs e) {
 			e.AcceptedOperation = DataPackageOperation.Copy;
+		}
+
+		async void ShowAlbumStatistic(object sender, RoutedEventArgs e) {
+			await AlbumStatisticList.AddSongs();
+			StatisticListSong.ItemsSource = SongStatisticList.GetList();
+
+		}
+
+		async void ShowArtistStatistic(object sender, RoutedEventArgs e) {
+			await ArtistStatisticList.AddSongs();
+			StatisticListSong.ItemsSource = SongStatisticList.GetList();
+		}
+
+		async void ShowTitleStatistic(object sender, RoutedEventArgs e) {
+			await SongStatisticList.AddSongs();
+			StatisticListSong.ItemsSource = SongStatisticList.GetList();
 		}
 	}
 

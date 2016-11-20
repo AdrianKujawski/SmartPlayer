@@ -99,8 +99,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller\PlayerController.cs" />
+    <Compile Include="Lists\ArtistStatisticList.cs" />
     <Compile Include="Lists\Playlist.cs" />
-    <Compile Include="Lists\StatisticList.cs" />
+    <Compile Include="Lists\AlbumStatisticList.cs" />
+    <Compile Include="Lists\SongStatisticList.cs" />
     <Compile Include="NotifyFolder\Notify.cs" />
     <Compile Include="NotifyFolder\NotifyType.cs" />
     <Compile Include="Song\SongCreator.cs" />
