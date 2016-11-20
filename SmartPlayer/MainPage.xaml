@@ -12,6 +12,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="100"/>
 			</Grid.RowDefinitions>
 
@@ -19,8 +20,19 @@
 
 			<StackPanel Grid.Row="0" x:Name="ActionPanel">
 				<TextBlock x:Name="SongName" Margin="10" Text="Song name" FontSize="22"/>
-				<TextBlock x:Name="Time" Margin="10" Text="00:00:00" FontSize="20" TextAlignment="Center"/>
-				<Slider x:Name="TimelineSlider" Margin="10" IsThumbToolTipEnabled="False" PointerCaptureLost="SeekToMediaPosition"/>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock x:Name="Time" Margin="10" Text="00:00" FontSize="20" TextAlignment="Center"/>
+					<Slider Grid.Column="1" x:Name="TimelineSlider" Margin="10" IsThumbToolTipEnabled="False" PointerCaptureLost="SeekToMediaPosition"/>
+					<TextBlock Grid.Column="2" x:Name="TimeMax" Margin="10" Text="00:00" FontSize="20" TextAlignment="Center"/>
+				</Grid>
+				
 				<Slider x:Name="VolumeSlider" Margin="10" StepFrequency="0.01" Minimum="0.0" Maximum="1.0" Value="1.0"
 						IsThumbToolTipEnabled="False" ValueChanged="ChangeMediaVolume"/>
 				<Grid>
@@ -29,6 +41,7 @@
 						<ColumnDefinition MinWidth="400" MaxWidth="800" Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
+					
 					<Grid Column="1">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition/>
@@ -45,24 +58,14 @@
 					</Grid>
 				</Grid>
 
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-					<Button x:Name="Button" Margin="10" Content="Otwórz" Click="OpenFiles" HorizontalAlignment="Stretch"/>
-					<Button x:Name="ClearButton" Margin="10" Content="Wyczyść" Grid.Column="1" Click="ClearPlaylist" HorizontalAlignment="Stretch"/>
-					<Button x:Name="StatisticButton" Margin="10" Content="Statystyki" Click="ShowStatistics"
-							HorizontalAlignment="Stretch" Grid.Column="2"/>
-				</Grid>
+				
 			</StackPanel>
 
 			<ListView x:Name="ListViewSongs" Margin="10" Background="{ThemeResource ButtonDisabledBorderThemeBrush}"
 					Grid.Row="1" AllowDrop="True" Drop="DropSongsToPlaylist" DragEnter="SetAcceptedOperation">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<Grid Height="40">
+						<Grid Height="40" Width="Auto">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="*"/>
@@ -82,8 +85,20 @@
 				</ListView.ItemTemplate>
 			</ListView>
 
+			<Grid Grid.Row="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Button x:Name="Button" Margin="10" Content="Otwórz" Click="OpenFiles" HorizontalAlignment="Stretch"/>
+				<Button x:Name="ClearButton" Margin="10" Content="Wyczyść" Grid.Column="1" Click="ClearPlaylist" HorizontalAlignment="Stretch"/>
+				<Button x:Name="StatisticButton" Margin="10" Content="Statystyki" Click="ShowStatistics"
+							HorizontalAlignment="Stretch" Grid.Column="2"/>
+			</Grid>
+			
 			<Border x:Name="StatusBorder" MaxHeight="50"
-					Grid.Row="2" Background="Green">
+					Grid.Row="3" Background="Green">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>

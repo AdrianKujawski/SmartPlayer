@@ -58,6 +58,7 @@ namespace SmartPlayer {
 
 		void SongOpened(object sender, RoutedEventArgs e) {
 			SetDurationSong();
+			TimeMax.Text = MediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
 			TimelineSlider.Value = 0;
 			TimelineSlider.Maximum = SongTime.DuractionSong;
 			MediaPlayer.Volume = VolumeSlider.Value;
@@ -72,7 +73,7 @@ namespace SmartPlayer {
 		}
 
 		void StartSongAgain() {
-			Time.Text = "00:00:00";
+			Time.Text = "00:00";
 			TimelineSlider.Value = 0;
 			SongTime.ActualSecond = 0;
 		}
@@ -127,7 +128,7 @@ namespace SmartPlayer {
 		}
 
 		void ChangeTimeTextValue() {
-			var songTime = MediaPlayer.Position.ToString(@"hh\:mm\:ss");
+			var songTime = MediaPlayer.Position.ToString(@"mm\:ss");
 			Time.Text = songTime;
 		}
 
@@ -196,7 +197,7 @@ namespace SmartPlayer {
 
 			PlayerController.StopSong();
 			PlayPauseButton.Content = "►";
-			Time.Text = "00:00:00";
+			Time.Text = "00:00";
 			TimelineSlider.Value = 0;
 		}
 

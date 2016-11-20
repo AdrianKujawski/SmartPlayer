@@ -19,32 +19,42 @@ namespace SmartPlayer {
 	///     An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 	public sealed partial class LoginPage : Page {
+
+		User _user;
+
 		public LoginPage() {
 			InitializeComponent();
 		}
 
 		async void SignIn(object sender, RoutedEventArgs e) {
-			DisableControllers();
+			var result = await TryToSignIn();
+			if (!result) {
+				SwitchControllers();
+				InfoPanel.Visibility = Visibility;
+			}
+			else {
+				MusicPlayer.ActualUser = _user;
+				Window.Current.Content = new MainPage();
+			}
+		}
+
+		async Task<bool> TryToSignIn() {
+			SwitchControllers();
 #if DEBUG
 			LoginBox.Text = "AdrianXIX";
 			PasswordBox.Password = "123qwe";
 #endif
 			if (!CheckTextBox()) {
-				InfoPanel.Visibility = Visibility;
 				ErrorBlock.Text = "Źle wpisane dane.";
-				return;
+				return false;
 			}
 
-			var user = new User(LoginBox.Text, PasswordBox.Password);
-			var isCorrect = await CheckLoginAndPassword(user);
-			if (!isCorrect) {
-				InfoPanel.Visibility = Visibility;
-				ErrorBlock.Text = "Nieporawny login lub hasło.";
-				return;
-			}
+			_user = new User(LoginBox.Text, PasswordBox.Password);
+			var isCorrect = await CheckLoginAndPassword(_user);
+			if (isCorrect) return true;
 
-			MusicPlayer.ActualUser = user;
-			Window.Current.Content = new MainPage();
+			ErrorBlock.Text = "Nieporawny login lub hasło.";
+			return false;
 		}
 
 		bool CheckTextBox() {
@@ -62,10 +72,10 @@ namespace SmartPlayer {
 			return isCorrect;
 		}
 
-		void DisableControllers() {
-			LoignButton.IsEnabled = false;
-			LoginBox.IsEnabled = false;
-			PasswordBox.IsEnabled = false;
+		void SwitchControllers() {
+			LoignButton.IsEnabled = !LoignButton.IsEnabled;
+			LoginBox.IsEnabled = !LoginBox.IsEnabled;
+			PasswordBox.IsEnabled = !PasswordBox.IsEnabled;
 		}
 	}
 
