@@ -631,10 +631,10 @@
   </wsdl:binding>
   <wsdl:service name="MpService">
     <wsdl:port name="MpServiceSoap" binding="tns:MpServiceSoap">
-      <soap:address location="http://localhost/MPService.asmx" />
+      <soap:address location="http://192.168.43.144/MPService.asmx" />
     </wsdl:port>
     <wsdl:port name="MpServiceSoap12" binding="tns:MpServiceSoap12">
-      <soap12:address location="http://localhost/MPService.asmx" />
+      <soap12:address location="http://192.168.43.144/MPService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -66,7 +66,7 @@ namespace SmartPlayer {
 			try {
 				isCorrect = await user.CheckLoginAndPassword();
 			}
-			catch (Exception exc) {
+			catch (Exception) {
 				ErrorBlock.Text = "Nie można połączyć się z serwerem.";
 			}
 			return isCorrect;

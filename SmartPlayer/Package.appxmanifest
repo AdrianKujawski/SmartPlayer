@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="7ba0327c-25a6-480a-be87-25f2654173f2" Publisher="CN=Adrian" Version="1.0.7.0" />
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap mp uap3">
+  <Identity Name="7ba0327c-25a6-480a-be87-25f2654173f2" Publisher="CN=Adrian" Version="1.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="7ba0327c-25a6-480a-be87-25f2654173f2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>SmartPlayer</DisplayName>
@@ -14,20 +14,19 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SmartPlayer.App">
-      <uap:VisualElements DisplayName="SmartPlayer" Square150x150Logo="Assets\icon300.png" Square44x44Logo="Assets\icon88.png" Description="SmartPlayer" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\icon.png" ShortName="SmartPlayer">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MusicPlayer.App">
+      <uap:VisualElements DisplayName="MusicPlayer" Square150x150Logo="Assets\icon300.png" Square44x44Logo="Assets\icon88.png" Description="Music player." BackgroundColor="transparent">
+        <uap:DefaultTile ShortName="MusicPlayer">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
-            <uap:ShowOn Tile="wide310x150Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\iconSplash.png" />
+        <uap:SplashScreen Image="Assets\splash.png" />
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="portrait" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
-      <Extensions>
+	   <Extensions>
         <Extension Category="windows.backgroundTasks" EntryPoint="SmartPlayer.MainPage">
           <BackgroundTasks>
             <Task Type="audio" />

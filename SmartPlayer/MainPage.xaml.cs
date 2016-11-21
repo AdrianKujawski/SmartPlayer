@@ -261,7 +261,7 @@ namespace SmartPlayer {
 			MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
 		}
 
-		async void ShowStatistics(object sender, RoutedEventArgs e) {
+		void ShowStatistics(object sender, RoutedEventArgs e) {
 			var isPlayerActiv = PlayerPanel.Visibility == Visibility.Visible;
 
 			if (isPlayerActiv) {

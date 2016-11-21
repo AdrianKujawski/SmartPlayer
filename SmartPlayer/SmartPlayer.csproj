@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmartPlayer</RootNamespace>
     <AssemblyName>SmartPlayer</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>pl-PL</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
@@ -17,9 +17,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>SmartPlayer_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Never</AppxBundle>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -135,7 +136,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\PlayerService\MPService1.wsdl" />
+    <None Include="Service References\PlayerService\MPService.wsdl" />
     <None Include="Service References\PlayerService\SmartPlayer.PlayerService.FindAlbumIdResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -169,12 +170,15 @@
     <None Include="SmartPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\iconSplash.png" />
+    <Content Include="Assets\splash.scale-100.png" />
+    <Content Include="Assets\splash.scale-200.png" />
+    <Content Include="Assets\icon300.scale-100.png" />
+    <Content Include="Assets\icon88.scale-100.png" />
+    <Content Include="Assets\icon88.scale-200.png" />
     <Content Include="Assets\icon50.png" />
-    <Content Include="Assets\icon88.png" />
-    <Content Include="Assets\icon300.png" />
+    <Content Include="Assets\icon300.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <None Include="Service References\PlayerService\MPService1.disco" />
+    <None Include="Service References\PlayerService\MPService.disco" />
     <None Include="Service References\PlayerService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

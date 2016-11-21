@@ -1113,7 +1113,7 @@ namespace SmartPlayer.PlayerService {
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration) {
             if ((endpointConfiguration == EndpointConfiguration.MpServiceSoap)) {
-                return new System.ServiceModel.EndpointAddress("http://localhost/MPService.asmx");
+                return new System.ServiceModel.EndpointAddress("http://192.168.43.144/MPService.asmx");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
